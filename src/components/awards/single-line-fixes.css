@@ -1,0 +1,30 @@
+/* Additional responsive styles for ensuring "One Name One Legend" stays on one line */
+@media (max-width: 360px) {
+  .legend-text-container {
+    font-size: 1rem !important;
+    gap: 3px !important;
+  }
+
+  .legend-icon svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  
+  .legend-text-part {
+    padding: 0 5px !important;
+  }
+  
+  .text-item {
+    font-size: 1rem !important;
+    padding: 0 8px !important;
+  }
+}
+
+/* Force single line display */
+.legend-text-container, 
+.text-track,
+.text-item {
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  overflow: visible !important;
+}

@@ -1,0 +1,121 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    // Désactiver les indicateurs dev
+    devIndicators: false,
+    
+    // Optimisations expérimentales essentielles avec Turbopack
+    experimental: {
+        optimizePackageImports: ['framer-motion', 'react-icons', 'typewriter-effect'],
+    },
+
+    // Configuration Turbopack (stable)
+    turbopack: {
+        rules: {
+            '*.svg': {
+                loaders: ['@svgr/webpack'],
+                as: '*.js',
+            },
+        },
+    },
+
+    // Configuration d'images optimisée pour votre site
+    images: {
+        formats: ['image/webp', 'image/avif'],
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        minimumCacheTTL: 86400, // 24h cache pour dev, sera plus long en prod
+        dangerouslyAllowSVG: true,
+        contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+        domains: [],
+        remotePatterns: [],
+        unoptimized: false,
+    },
+
+    // Headers de cache légers mais efficaces
+    async headers() {
+        return [
+            {
+                source: '/assets/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
+            {
+                source: '/images/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
+            {
+                source: '/icons/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
+            {
+                source: '/_next/static/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
+        ];
+    },
+
+    // Redirections pour les anciens chemins d'assets
+    async redirects() {
+        return [
+            {
+                source: '/public/assets/:path*',
+                destination: '/assets/:path*',
+                permanent: true,
+            },
+            {
+                source: '/public/images/:path*',
+                destination: '/images/:path*',
+                permanent: true,
+            },
+            {
+                source: '/public/icons/:path*',
+                destination: '/icons/:path*',
+                permanent: true,
+            },
+        ];
+    },
+
+    // Webpack minimal pour votre projet
+    webpack: (config, { dev, isServer }) => {
+        if (!dev && !isServer) {
+            // Bundle splitting simple pour les grosses librairies
+            config.optimization.splitChunks = {
+                chunks: 'all',
+                cacheGroups: {
+                    framerMotion: {
+                        test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+                        name: 'framer-motion',
+                        priority: 30,
+                    },
+                    reactIcons: {
+                        test: /[\\/]node_modules[\\/]react-icons[\\/]/,
+                        name: 'react-icons',
+                        priority: 20,
+                    },
+                },
+            };
+        }
+        return config;
+    },
+};
+
+export default nextConfig;

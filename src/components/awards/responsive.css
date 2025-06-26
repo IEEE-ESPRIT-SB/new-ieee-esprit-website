@@ -1,0 +1,86 @@
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .carousel-item img {
+    max-width: 260px;
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .carousel-item img {
+    max-width: 240px;
+    min-width: 160px;
+  }
+  
+  .awards-carousel-container {
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, transparent 100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-item img {
+    max-width: 200px;
+    min-width: 140px;
+    border-radius: 8px;
+    padding: 6px;
+  }
+  
+  .carousel-item {
+    padding: 0 12px;
+  }
+  
+  .carousel-item:hover img {
+    transform: perspective(800px) rotateY(3deg) scale(1.08) translateY(-8px);
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .awards-carousel-container {
+    padding: 20px 0;
+    margin-bottom: 30px;
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,1) 98%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,1) 98%, transparent 100%);
+  }
+  
+  .awards-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item img {
+    width: 180px;
+    height: 120px;
+    border-radius: 6px;
+    padding: 6px;
+  }
+  
+  .carousel-item {
+    padding: 0 8px;
+  }
+  
+  .carousel-item:hover img {
+    transform: perspective(600px) rotateY(2deg) scale(1.05) translateY(-5px);
+    box-shadow: 0 10px 25px rgba(73, 0, 128, 0.3);
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .awards-carousel-container {
+    padding: 15px 0;
+    margin-bottom: 20px;
+  }
+  
+  .awards-title {
+    font-size: 1.75rem;
+  }
+  
+  .awards-subtitle {
+    font-size: 1rem;
+  }
+}

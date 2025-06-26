@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://votredomaine.com/sitemap.xml
+
+# Spécifique aux crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Désactiver pour les dossiers sensibles
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/

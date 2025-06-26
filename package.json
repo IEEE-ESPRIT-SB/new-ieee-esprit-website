@@ -1,0 +1,37 @@
+{
+  "name": "nextj_front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "dev:debug": "next dev --turbo --experimental-debug",
+    "dev:profile": "next dev --turbo --experimental-debug",
+    "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
+    "build:profile": "next build --profile --debug",
+    "start": "next start",
+    "lint": "next lint --cache",
+    "lint:fix": "next lint --fix --cache",
+    "clean": "rm -rf .next out node_modules/.cache",
+    "perf": "npm run build && npm run start",
+    "turbo:info": "next info"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.16.0",
+    "next": "15.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "sass": "^1.89.1",
+    "tailwind-merge": "^3.3.0",
+    "typewriter-effect": "^2.22.0"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^15.3.3",
+    "@svgr/webpack": "^8.1.0",
+    "@tailwindcss/postcss": "^4.1.10",
+    "webpack-bundle-analyzer": "^4.10.1"
+  }
+}
