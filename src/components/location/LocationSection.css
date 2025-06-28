@@ -12,11 +12,12 @@
   margin-top: 2rem;
 }
 
-/* Animated background effect */
+/* Animated background effect - REMOVED */
+/*
 .location-section::before {
   content: '';
   position: absolute;
-  inset: 0; /* Shorthand for top, right, bottom, left */
+  inset: 0;
   background: url('/icons/innovation.png') repeat;
   background-size: 200px;
   opacity: 0.03;
@@ -27,6 +28,7 @@
 @keyframes backgroundSlide {
   to { background-position: 1000px 1000px; }
 }
+*/
 
 .location-container {
   max-width: 1400px;
@@ -136,20 +138,21 @@
   z-index: 1;
 }
 
-/* Map container border and glowing effect */
+/* Map container border and glowing effect - GLOW ANIMATION REMOVED */
 .map-container::after {
   content: '';
   position: absolute;
-  inset: 0; /* Shorthand for top, right, bottom, left */
+  inset: 0;
   border-radius: 15px;
   border: 2px solid rgba(255, 255, 255, 0.1);
   pointer-events: none;
 }
 
+/*
 .map-container::before {
   content: '';
   position: absolute;
-  inset: -2px; /* Shorthand for top, right, bottom, left with negative values */
+  inset: -2px;
   background: linear-gradient(45deg, #7f00ff, transparent, #bb86fc, transparent, #7f00ff);
   background-size: 400% 400%;
   z-index: 0;
@@ -161,18 +164,15 @@
   box-shadow: 0 0 30px rgba(127, 0, 255, 0.5);
 }
 
-.map-container.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.map-container.visible::before {
-  opacity: 0.8;
-}
-
 @keyframes glowingBorder {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+*/
+
+.map-container.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Info box overlay styling */

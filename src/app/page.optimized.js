@@ -229,7 +229,7 @@ export default function Home() {
             </div>
             
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Rejoignez la plus grande organisation étudiante technique au monde et façonnez l'avenir de la technologie.
+              Rejoignez la plus grande organisation étudiante technique au monde et façonnez l&apos;avenir de la technologie.
             </p>
           </div>
         </main>

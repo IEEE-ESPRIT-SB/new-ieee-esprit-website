@@ -1,7 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Désactiver les indicateurs dev
-    devIndicators: false,
+    // Development-specific settings
+    productionBrowserSourceMaps: false,
+    generateBuildId: () => 'dev-build',
+    
+    // Configuration des indicateurs de développement
+    devIndicators: {
+        position: 'bottom-right',
+    },
+    
+    // Configuration pour les origines de développement autorisées
+    allowedDevOrigins: [
+        '192.168.1.12',
+        'localhost',
+        '127.0.0.1',
+        '0.0.0.0'
+    ],
     
     // Optimisations expérimentales essentielles avec Turbopack
     experimental: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Navbar({ active = "" }) {
   return (
@@ -8,7 +9,7 @@ export default function Navbar({ active = "" }) {
         <Image src="/images/ieee-logo-removebg-preview.png" alt="IEEE Logo" height={60} width={120} style={{ height: '100%', width: 'auto', display: 'block', objectFit: 'contain' }} />
       </div>
       <ul className="nav-links">
-        <li><a href="/" className={active === 'home' ? 'active' : ''}>Home</a></li>
+        <li><Link href="/" className={active === 'home' ? 'active' : ''}>Home</Link></li>
         <li><a href="/about_us" className={active === 'about' ? 'active' : ''}>About Us</a></li>
         <li><a href="/events" className={active === 'events' ? 'active' : ''}>Events</a></li>
         <li><a href="/units" className={active === 'units' ? 'active' : ''}>Units</a></li>

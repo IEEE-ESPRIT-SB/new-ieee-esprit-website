@@ -5,15 +5,17 @@
   "scripts": {
     "dev": "next dev --turbo",
     "dev:debug": "next dev --turbo --experimental-debug",
-    "dev:profile": "next dev --turbo --experimental-debug",
+    "dev:profile": "next dev --turbo --experimental-debug", 
+    "dev:force": "next dev --turbo --experimental-https",
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
     "build:profile": "next build --profile --debug",
     "start": "next start",
-    "lint": "next lint --cache",
-    "lint:fix": "next lint --fix --cache",
+    "start:dev": "next dev --turbo",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "clean": "rm -rf .next out node_modules/.cache",
-    "perf": "npm run build && npm run start",
+    "perf": "npm run build && npm run start:dev",
     "turbo:info": "next info"
   },
   "dependencies": {
@@ -35,6 +37,8 @@
     "@next/bundle-analyzer": "^15.3.3",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.1.10",
+    "eslint": "9.30.0",
+    "eslint-config-next": "15.3.4",
     "webpack-bundle-analyzer": "^4.10.1"
   }
 }

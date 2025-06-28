@@ -731,7 +731,7 @@ export default function EventsPage() {
                     sizes="(max-width: 600px) 100vw, 600px"
                     priority={index < 2}
                     loading={index < 2 ? 'eager' : 'lazy'}
-                    onError={(e) => { e.target.style.opacity = 0.5; }}
+                    onError={(e) => { e.target.style.opacity = 0.5; e.target.onerror = null; }}
                   />
                   {/* Optional overlay for premium look */}
                   <div style={{
@@ -971,7 +971,7 @@ export default function EventsPage() {
                 maxWidth: '400px',
                 margin: '0 auto'
               }}>
-                Try adjusting your search terms or filters to discover the events you're looking for.
+                Try adjusting your search terms or filters to discover the events you&apos;re looking for.
               </p>
 
               {/* Background Decoration */}
