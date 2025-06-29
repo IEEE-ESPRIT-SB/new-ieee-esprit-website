@@ -6,6 +6,9 @@ import Preloader from '../../components/Preloader';
 import Navbar from '../../components/Navbar';
 import eventsData from '../../assets/events.json';
 import './events.css';
+import Pagination from '../../components/events/Pagination';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
 // Import sophisticated icon components
 import { 
@@ -21,6 +24,9 @@ import {
   EventIcon
 } from '../../components/EventIcons';
 
+// Import dynamique de react-select pour réduire le JS runtime côté client
+const Select = dynamic(() => import('react-select'), { ssr: false });
+
 export default function EventsPage() {
   const [preloading, setPreloading] = useState(true);
   const [stars, setStars] = useState([]);
@@ -35,6 +41,18 @@ export default function EventsPage() {
 
   // Debounced search state
   const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
+
+  // Pagination state
+  const pageSizeOptions = [
+    { value: 6, label: '6 per page' },
+    { value: 12, label: '12 per page' },
+    { value: 24, label: '24 per page' },
+  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(pageSizeOptions[0].value);
+
+  // Reset page to 1 when filter/search/pageSize changes
+  useEffect(() => { setCurrentPage(1); }, [activeFilter, debouncedSearch, pageSize]);
 
   useEffect(() => {
     const preloadTimer = setTimeout(() => {
@@ -89,6 +107,13 @@ export default function EventsPage() {
     }
     return filtered;
   }, [events, activeFilter, debouncedSearch]);
+
+  // Pagination logic
+  const paginatedEvents = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filteredEvents.slice(start, start + pageSize);
+  }, [filteredEvents, currentPage, pageSize]);
+  const pageCount = Math.ceil(filteredEvents.length / pageSize);
 
   // Generate colored circles to exactly match the background in the example image
   useEffect(() => {
@@ -295,6 +320,10 @@ export default function EventsPage() {
 
   return (
     <>
+      <Head>
+        <title>Events - Page {currentPage} | IEEE ESPRIT SB</title>
+        <meta name="description" content={`Découvrez nos événements - Page ${currentPage}`} />
+      </Head>
       <AnimatePresence mode="wait">
         {preloading && <Preloader />}
       </AnimatePresence>
@@ -662,16 +691,111 @@ export default function EventsPage() {
             </motion.div>
           </motion.div>
 
-          {/* Events Grid */}
-          <motion.div 
-            style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+          {/* Sélecteur du nombre de cards par page */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '2rem 0 1.5rem 0', gap: '2rem', flexWrap: 'wrap' }}>
+            <div style={{ minWidth: 200, flex: '0 0 auto' }}>
+              <Select
+                options={pageSizeOptions}
+                value={pageSizeOptions.find(opt => opt.value === pageSize)}
+                onChange={opt => setPageSize(opt.value)}
+                instanceId="event-page-size-select"
+                aria-label="Number of events per page"
+                styles={{
+                  control: (base, state) => ({
+                    ...base,
+                    background: 'rgba(30, 28, 124, 0.45)',
+                    borderRadius: '1.5rem',
+                    border: state.isFocused ? '2.5px solid var(--accent-primary, #3f51b5)' : '2px solid rgba(255,255,255,0.18)',
+                    color: 'var(--text-primary, #fff)',
+                    minWidth: 180,
+                    fontFamily: 'var(--font-body)',
+                    fontWeight: 600,
+                    fontSize: '1.08rem',
+                    boxShadow: state.isFocused ? '0 0 0 4px rgba(63,81,181,0.18)' : '0 2px 12px 0 rgba(63,81,181,0.10)',
+                    backdropFilter: 'blur(8px)',
+                    transition: 'all 0.25s',
+                  }),
+                  valueContainer: (base) => ({
+                    ...base,
+                    color: 'var(--text-primary, #fff)',
+                    paddingLeft: '1.1rem',
+                  }),
+                  singleValue: (base) => ({
+                    ...base,
+                    color: 'var(--text-primary, #fff)',
+                    fontWeight: 700,
+                  }),
+                  input: (base) => ({
+                    ...base,
+                    color: 'var(--text-primary, #fff)',
+                  }),
+                  dropdownIndicator: (base, state) => ({
+                    ...base,
+                    color: state.isFocused ? 'var(--accent-primary, #3f51b5)' : '#b8beea',
+                    transition: 'color 0.2s',
+                  }),
+                  indicatorSeparator: (base) => ({
+                    ...base,
+                    background: 'rgba(255,255,255,0.12)',
+                  }),
+                  menu: (base) => ({
+                    ...base,
+                    background: 'rgba(30, 28, 124, 0.98)',
+                    borderRadius: 18,
+                    color: '#fff',
+                    marginTop: 6,
+                    boxShadow: '0 8px 32px 0 rgba(63,81,181,0.18)',
+                    padding: '0.25rem 0',
+                    minWidth: 180,
+                  }),
+                  option: (base, state) => ({
+                    ...base,
+                    background: state.isSelected
+                      ? 'linear-gradient(135deg, var(--accent-primary, #3f51b5) 60%, var(--accent-secondary, #9c27b0) 100%)'
+                      : state.isFocused
+                        ? 'rgba(63,81,181,0.18)'
+                        : 'transparent',
+                    color: state.isSelected ? '#fff' : state.isFocused ? '#fff' : '#e2e8f0',
+                    fontWeight: state.isSelected ? 700 : 500,
+                    borderRadius: 14,
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '1.08rem',
+                    padding: '0.75rem 1.5rem',
+                    transition: 'background 0.18s, color 0.18s',
+                    cursor: 'pointer',
+                  }),
+                  menuList: (base) => ({
+                    ...base,
+                    padding: 0,
+                  }),
+                }}
+                theme={theme => ({
+                  ...theme,
+                  borderRadius: 18,
+                  colors: {
+                    ...theme.colors,
+                    primary: 'var(--accent-primary)',
+                    primary25: 'rgba(63,81,181,0.18)',
+                    neutral0: 'rgba(30, 28, 124, 0.98)',
+                    neutral80: '#fff',
+                  },
+                })}
+                isSearchable={false}
+              />
+            </div>
+          </div>
+
+          {/* Affichage des événements paginés */}
+          <motion.div
+            id="events-cards-section"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
               gap: '2rem',
               marginBottom: '4rem'
             }}
           >
-            {filteredEvents.map((event, index) => (
+            {paginatedEvents.map((event, index) => (
               <motion.div
                 key={event.title}
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -911,9 +1035,19 @@ export default function EventsPage() {
               </motion.div>
             ))}
           </motion.div>
+          {/* Pagination en bas si besoin */}
+          {pageCount > 1 && (
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
+              <Pagination
+                pageCount={pageCount}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
 
           {/* Refined No Results Message */}
-          {filteredEvents.length === 0 && (
+          {paginatedEvents.length === 0 && (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
