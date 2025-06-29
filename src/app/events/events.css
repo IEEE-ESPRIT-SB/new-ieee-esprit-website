@@ -113,6 +113,72 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+#events-cards-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 900px) {
+  #events-cards-section {
+    gap: 1.2rem;
+  }
+}
+@media (max-width: 600px) {
+  .content-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  #events-cards-section {
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.7rem;
+  }
+  .pagination-nav {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 0.5rem;
+  }
+  .pagination {
+    gap: 0.2rem;
+  }
+  .pagination-page, .pagination-previous, .pagination-next, .pagination-current {
+    font-size: 0.98rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 10px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .pagination-current {
+    min-width: 54px;
+    padding: 0.45rem 0.9rem;
+  }
+  .Select__control, .Select__menu {
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: 1rem;
+  }
+  .Select__control {
+    margin-bottom: 1rem;
+  }
+}
+@media (max-width: 400px) {
+  #events-cards-section {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+  .pagination-page, .pagination-previous, .pagination-next, .pagination-current {
+    font-size: 0.92rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 8px;
+    min-width: 38px;
+    min-height: 38px;
+  }
 }
 
 /* Sophisticated Micro-Interactions */
