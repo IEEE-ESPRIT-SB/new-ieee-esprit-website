@@ -308,14 +308,22 @@ export default function Home() {
           position: 'relative',
           zIndex: 3
         }}>
-          <h1 style={{
-            color: '#fff',
-            fontSize: '2.5rem',
+          <h1 className="text-display" style={{
+            fontFamily: "'Playfair Display', 'Times New Roman', serif",
+            fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+            color: '#b8beea', // identical to events page title color
             fontWeight: 700,
+            letterSpacing: '-0.025em',
+            lineHeight: '1.2',
             textAlign: 'center',
-            marginBottom: '0.2em',
-            letterSpacing: '0.01em',
-            textShadow: '0 2px 16px #0a0b30'
+            marginBottom: '1rem',
+            padding: '0 1rem',
+            wordBreak: 'break-word',
+            hyphens: 'auto',
+            background: 'none',
+            boxShadow: 'none',
+            border: 'none',
+            textShadow: 'none'
           }}>Our Executive Committee</h1>
           <h2 style={{
             color: '#b8beea',
@@ -355,10 +363,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+        {/* Section Title: IEEE ESPRIT in Numbers */}
         
-        {/* Statistique Section */}
         <StatistiqueSection />
-        
         {/* Awards Section */}
         <section style={{
           padding: '3rem 0',
@@ -368,14 +375,29 @@ export default function Home() {
           width: '100%'
         }}>
           <div className="awards-title-wrapper">
-            <h1 className="awards-title">Our Awards & Recognitions</h1>
+            <h1 className="text-display" style={{
+              fontFamily: "'Playfair Display', 'Times New Roman', serif",
+              fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+              color: '#b8beea',
+              fontWeight: 700,
+              letterSpacing: '-0.025em',
+              lineHeight: '1.2',
+              textAlign: 'center',
+              marginBottom: '1rem',
+              padding: '0 1rem',
+              wordBreak: 'break-word',
+              hyphens: 'auto',
+              background: 'none',
+              boxShadow: 'none',
+              border: 'none',
+              textShadow: 'none'
+            }}>Our Awards & Recognitions</h1>
             <h2 className="awards-subtitle">Excellence in Innovation & Impact</h2>
           </div>
-          
           <AwardsCarousel />
         </section>
+        {/* Section Title: We're located in ESPRIT, Obviously! */}
         
-        {/* Location Section */}
         <LocationSection />
       </main>
     </>

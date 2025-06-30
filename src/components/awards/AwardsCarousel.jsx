@@ -12,7 +12,23 @@ import './single-line-fixes.css';
 const AwardsCarousel = () => {
   const [firstHalfAwards, setFirstHalfAwards] = useState([]);
   const [secondHalfAwards, setSecondHalfAwards] = useState([]);
-  
+  // Particle state for client-only rendering
+  const [particles, setParticles] = useState([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Generate random particle data only on the client
+    const newParticles = Array.from({ length: 20 }, () => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      opacity: Math.random() * 0.5 + 0.1,
+      animationDelay: `${Math.random() * 15}s`,
+      animationDuration: `${Math.random() * 10 + 10}s`,
+    }));
+    setParticles(newParticles);
+  }, []);
+
   useEffect(() => {
     // Function to fetch award images split into two halves
     function fetchAwards() {
@@ -34,17 +50,11 @@ const AwardsCarousel = () => {
     <div className="awards-section">
       {/* Particle effects */}
       <div className="particles-container">
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={`particle-${i}`} 
-            className="particle" 
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.5 + 0.1,
-              animationDelay: `${Math.random() * 15}s`,
-              animationDuration: `${Math.random() * 10 + 10}s`
-            }}
+        {mounted && particles.map((particle, i) => (
+          <div
+            key={`particle-${i}`}
+            className="particle"
+            style={particle}
           />
         ))}
       </div>
