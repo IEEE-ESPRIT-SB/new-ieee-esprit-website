@@ -40,7 +40,7 @@ const AwardsCarousel = () => {
     fetchAwards();
   }, []);  // Calculate the animation duration based on the number of images
   const getAnimationDuration = (count) => {
-    return `${count * 10}s`; // 10 seconds per image for a faster animation
+    return `${count * 8}s`; // 10 seconds per image for a faster animation
   };
 
   // We need to duplicate the awards to create the infinite loop effect
@@ -71,14 +71,14 @@ const AwardsCarousel = () => {
                 <Image 
                   src={award.src} 
                   alt={award.alt}
-                  width={280}
-                  height={200}
+                  width={180}
+                  height={130}
                   style={{
                     objectFit: 'cover',
                     width: 'auto',
                     height: 'auto',
-                    maxWidth: '280px',
-                    maxHeight: '200px'
+                    maxWidth: '180px',
+                    maxHeight: '130px'
                   }}
                   priority={index < 3}
                 />
@@ -123,14 +123,14 @@ const AwardsCarousel = () => {
                 <Image 
                   src={award.src} 
                   alt={award.alt}
-                  width={280}
-                  height={200}
+                  width={180}
+                  height={130}
                   style={{
                     objectFit: 'cover',
                     width: 'auto',
                     height: 'auto',
-                    maxWidth: '280px',
-                    maxHeight: '200px'
+                    maxWidth: '180px',
+                    maxHeight: '130px'
                   }}
                   priority={index < 3}
                 />

@@ -32,12 +32,37 @@ const LocationSection = () => {
   return (
     <section className="location-section">
       <div className="location-container">
-        <div className="location-header">          <div className="location-pin">
+        <div className="location-header">
+          <div className="location-pin">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#7f00ff"/>
             </svg>
-          </div>          <h2 className="location-title">We&apos;re located in ESPRIT, Obviously!</h2>
-          <p className="location-subtitle">Check if we&apos;re neighbours!</p>
+          </div>
+          <h2 className="location-title font-playfair" style={{
+            fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+            color: '#b8beea',
+            fontWeight: 700,
+            letterSpacing: '-0.025em',
+            lineHeight: '1.2',
+            textAlign: 'center',
+            marginBottom: '0.5rem',
+            padding: '0 1rem',
+            wordBreak: 'break-word',
+            hyphens: 'auto',
+            background: 'none',
+            boxShadow: 'none',
+            border: 'none',
+            textShadow: 'none'
+          }}>We&apos;re located in ESPRIT, Obviously!</h2>
+          <p className="location-subtitle font-playfair" style={{
+            color: '#b8beea',
+            fontSize: '1.2rem',
+            fontWeight: 400,
+            textAlign: 'center',
+            marginBottom: '2.5em',
+            letterSpacing: '0.04em',
+            textShadow: '0 2px 16px #0a0b30'
+          }}>Check if we&apos;re neighbours!</p>
         </div>
         
         <div className="map-container" ref={mapContainerRef}>

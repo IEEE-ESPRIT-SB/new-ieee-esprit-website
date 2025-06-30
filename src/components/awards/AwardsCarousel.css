@@ -65,10 +65,10 @@
 
 .carousel-item img,
 .carousel-item span img {
-  max-width: 280px !important;
-  min-width: 200px !important;
+  max-width: 180px !important;
+  min-width: 120px !important;
   height: auto !important;
-  aspect-ratio: 4/3;
+  aspect-ratio: 18/13;
   object-fit: cover !important;
   border-radius: 12px;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
