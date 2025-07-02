@@ -52,35 +52,34 @@
 
 @media (max-width: 480px) {
   .carousel-item img {
-    width: 180px;
-    height: 120px;
+    width: 140px !important;
+    height: 100px !important;
+    max-width: 140px !important;
+    max-height: 100px !important;
+    min-width: 100px !important;
+    min-height: 70px !important;
     border-radius: 6px;
-    padding: 6px;
+    padding: 4px;
+    object-fit: cover;
   }
-  
   .carousel-item {
-    padding: 0 8px;
+    padding: 0 4px;
   }
-  
   .carousel-item:hover img {
-    transform: perspective(600px) rotateY(2deg) scale(1.05) translateY(-5px);
-    box-shadow: 0 10px 25px rgba(73, 0, 128, 0.3);
+    transform: none;
+    box-shadow: none;
   }
-  
   .section-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
-  
   .awards-carousel-container {
-    padding: 15px 0;
-    margin-bottom: 20px;
+    padding: 8px 0;
+    margin-bottom: 10px;
   }
-  
   .awards-title {
-    font-size: 1.75rem;
+    font-size: 1.2rem;
   }
-  
   .awards-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 }

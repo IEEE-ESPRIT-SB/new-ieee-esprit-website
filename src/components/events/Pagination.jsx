@@ -28,14 +28,16 @@ export default function Pagination({ pageCount, currentPage, onPageChange }) {
   const hasMore = currentPage + 2 < pageCount;
 
   return (
-    <nav className="pagination-nav" style={{gap: '0.5rem'}}>
+    <nav className="pagination-nav" aria-label="Pagination navigation" style={{gap: '0.5rem', flexWrap: 'wrap'}}>
       <button
         className={`pagination-previous${currentPage === 1 ? ' pagination-disabled' : ''}`}
         onClick={() => currentPage > 1 && handlePageChange({ selected: currentPage - 2 })}
         disabled={currentPage === 1}
-        aria-label="Previous page"
+        aria-label="Page précédente"
+        tabIndex={0}
       >
-        Previous
+        &#8592;
+        <span className="pagination-label">Previous</span>
       </button>
       {/* Pages précédentes */}
       {prevPages.map(page => (
@@ -43,7 +45,8 @@ export default function Pagination({ pageCount, currentPage, onPageChange }) {
           key={page}
           className="pagination-page"
           onClick={() => handlePageChange({ selected: page - 1 })}
-          aria-label={`Go to page ${page}`}
+          aria-label={`Aller à la page ${page}`}
+          tabIndex={0}
         >
           {page}
         </button>
@@ -68,6 +71,7 @@ export default function Pagination({ pageCount, currentPage, onPageChange }) {
             minWidth: 60,
             textAlign: 'center',
             outline: 'none',
+            boxShadow: '0 0 0 2px #3f51b5',
           }}
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -83,22 +87,25 @@ export default function Pagination({ pageCount, currentPage, onPageChange }) {
           key={page}
           className="pagination-page"
           onClick={() => handlePageChange({ selected: page - 1 })}
-          aria-label={`Go to page ${page}`}
+          aria-label={`Aller à la page ${page}`}
+          tabIndex={0}
         >
           {page}
         </button>
       ))}
       {/* Indicateur s'il y a plus de pages */}
       {hasMore && (
-        <span className="pagination-break" aria-label="More pages">...</span>
+        <span className="pagination-break" aria-label="Plus de pages">...</span>
       )}
       <button
         className={`pagination-next${currentPage === pageCount ? ' pagination-disabled' : ''}`}
         onClick={() => currentPage < pageCount && handlePageChange({ selected: currentPage })}
         disabled={currentPage === pageCount}
-        aria-label="Next page"
+        aria-label="Page suivante"
+        tabIndex={0}
       >
-        Next
+        <span className="pagination-label">Next</span>
+        &#8594;
       </button>
     </nav>
   );

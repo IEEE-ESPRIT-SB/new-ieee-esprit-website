@@ -323,6 +323,42 @@ export default function EventsPage() {
       <Head>
         <title>Events - Page {currentPage} | IEEE ESPRIT SB</title>
         <meta name="description" content={`Découvrez nos événements - Page ${currentPage}`} />
+        {/* SEO: Open Graph & Twitter */}
+        <meta property="og:title" content="Events | IEEE ESPRIT SB" />
+        <meta property="og:description" content="Découvrez nos événements, workshops et compétitions." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ieee-esprit.tn/events" />
+        <meta property="og:image" content="https://ieee-esprit.tn/og-events.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Events | IEEE ESPRIT SB" />
+        <meta name="twitter:description" content="Découvrez nos événements, workshops et compétitions." />
+        <meta name="twitter:image" content="https://ieee-esprit.tn/og-events.jpg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href="https://ieee-esprit.tn/events" />
+        {/* JSON-LD Event Schema */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "IEEE ESPRIT Events",
+            "startDate": events[0]?.date,
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "location": {
+              "@type": "Place",
+              "name": events[0]?.location,
+              "address": "ESPRIT, Tunis"
+            },
+            "image": [
+              "https://ieee-esprit.tn/og-events.jpg"
+            ],
+            "description": "Découvrez nos événements, workshops et compétitions.",
+            "organizer": {
+              "@type": "Organization",
+              "name": "IEEE ESPRIT SB",
+              "url": "https://ieee-esprit.tn"
+            }
+          })
+        }} />
       </Head>
       <AnimatePresence mode="wait">
         {preloading && <Preloader />}

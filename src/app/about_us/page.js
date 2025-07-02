@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, useState, useRef } from 'react';
-import Typewriter from 'typewriter-effect';
+import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import { AnimatePresence } from 'framer-motion';
 import Preloader from '../../components/Preloader';
 import Navbar from '../../components/Navbar';
@@ -17,7 +17,6 @@ export default function Home() {
   const [coloredCircles, setColoredCircles] = useState([]);
   const [loadingComplete, setLoadingComplete] = useState(false);
   const [windowWidth, setWindowWidth] = useState(1200);
-  const splineRef = useRef();
 
   useEffect(() => {
     const preloadTimer = setTimeout(() => {
@@ -215,20 +214,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  function handleMouseMove(e) {
-    // Get normalized mouse coordinates (-1 to 1)
-    const x = (e.clientX / window.innerWidth) * 2 - 1;
-    const y = -((e.clientY / window.innerHeight) * 2 - 1);
-
-    // Adjust these values to fit your scene's scale and camera
-    const lookTargetPosition = { x: x * 5, y: y * 2, z: 0 };
-
-    // Move the null object in Spline
-    if (splineRef.current) {
-      splineRef.current.emitEvent('setPosition', 'LookTarget', lookTargetPosition);
-    }
-  }
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setWindowWidth(window.innerWidth);
@@ -238,8 +223,39 @@ export default function Home() {
     }
   }, []);
 
-  return (
+return (
     <>
+      <Head>
+        <title>About Us | IEEE ESPRIT SB</title>
+        <meta name="description" content="Découvrez l'équipe, les distinctions et l'impact d'IEEE ESPRIT Student Branch. Innovation, excellence et engagement !" />
+        <meta property="og:title" content="About Us | IEEE ESPRIT SB" />
+        <meta property="og:description" content="Découvrez l'équipe, les distinctions et l'impact d'IEEE ESPRIT Student Branch. Innovation, excellence et engagement !" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ieee-esprit.tn/about_us" />
+        <meta property="og:image" content="https://ieee-esprit.tn/og-aboutus.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Us | IEEE ESPRIT SB" />
+        <meta name="twitter:description" content="Découvrez l'équipe, les distinctions et l'impact d'IEEE ESPRIT Student Branch. Innovation, excellence et engagement !" />
+        <meta name="twitter:image" content="https://ieee-esprit.tn/og-aboutus.jpg" />
+        <link rel="canonical" href="https://ieee-esprit.tn/about_us" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* JSON-LD Organization Schema */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "IEEE ESPRIT Student Branch",
+            "url": "https://ieee-esprit.tn",
+            "logo": "https://ieee-esprit.tn/ieee-logo.png",
+            "sameAs": [
+              "https://www.facebook.com/IEEE.ESPRIT.SB/",
+              "https://www.instagram.com/ieee.esprit.sb/",
+              "https://www.linkedin.com/company/ieee-esprit-sb/"
+            ],
+            "description": "Découvrez l'équipe, les distinctions et l'impact d'IEEE ESPRIT Student Branch. Innovation, excellence et engagement !"
+          })
+        }} />
+      </Head>
       <AnimatePresence mode="wait">
         {preloading && <Preloader />}
       </AnimatePresence>
@@ -311,7 +327,7 @@ export default function Home() {
           <h1 className="text-display" style={{
             fontFamily: "'Playfair Display', 'Times New Roman', serif",
             fontSize: 'clamp(2.5rem, 8vw, 4rem)',
-            color: '#b8beea', // identical to events page title color
+            color: '#b8beea',
             fontWeight: 700,
             letterSpacing: '-0.025em',
             lineHeight: '1.2',
@@ -375,7 +391,7 @@ export default function Home() {
           width: '100%'
         }}>
           <div className="awards-title-wrapper">
-            <h1 className="text-display" style={{
+            <h2 className="text-display" style={{
               fontFamily: "'Playfair Display', 'Times New Roman', serif",
               fontSize: 'clamp(2.5rem, 8vw, 4rem)',
               color: '#b8beea',
@@ -391,8 +407,8 @@ export default function Home() {
               boxShadow: 'none',
               border: 'none',
               textShadow: 'none'
-            }}>Our Awards & Recognitions</h1>
-            <h2 className="awards-subtitle">Excellence in Innovation & Impact</h2>
+            }}>Our Awards & Recognitions</h2>
+            <h3 className="awards-subtitle">Excellence in Innovation & Impact</h3>
           </div>
           <AwardsCarousel />
         </section>

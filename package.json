@@ -3,44 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
-    "dev:debug": "next dev --turbo --experimental-debug",
-    "dev:profile": "next dev --turbo --experimental-debug",
-    "dev:force": "next dev --turbo --experimental-https",
+    "dev": "next dev",
     "build": "next build",
-    "build:analyze": "ANALYZE=true next build",
-    "build:profile": "next build --profile --debug",
     "start": "next start",
-    "start:dev": "next dev --turbo",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "clean": "rm -rf .next out node_modules/.cache",
-    "perf": "npm run build && npm run start:dev",
-    "turbo:info": "next info"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@heroicons/react": "^2.2.0",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.16.0",
+    "framer-motion": "^12.18.1",
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "react-intersection-observer": "^9.16.0",
     "react-paginate": "^8.3.0",
     "react-select": "^5.10.1",
     "sass": "^1.89.1",
     "tailwind-merge": "^3.3.0",
-    "typed.js": "^2.1.0",
     "typewriter-effect": "^2.22.0"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^15.3.3",
-    "@svgr/webpack": "^8.1.0",
-    "@tailwindcss/postcss": "^4.1.10",
-    "eslint": "9.30.0",
-    "eslint-config-next": "15.3.4",
-    "webpack-bundle-analyzer": "^4.10.1"
+    "@tailwindcss/postcss": "^4.1.10"
   }
 }
