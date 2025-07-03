@@ -1,0 +1,137 @@
+{
+  "committee": [
+    {
+      "id": 1,
+      "name": "Adam Lassidi",
+      "position": "Chairman",
+      "image": "https://via.placeholder.com/150/3b82f6/ffffff?text=AL"
+    },
+    {
+      "id": 2,
+      "name": "Yosr Samaali",
+      "position": "Vice Chair",
+      "image": "https://via.placeholder.com/150/ef4444/ffffff?text=YS"
+    },
+    {
+      "id": 3,
+      "name": "Ilyes Ben Hammouda",
+      "position": "Secretary",
+      "image": "https://via.placeholder.com/150/3b82f6/ffffff?text=IBH"
+    },
+    {
+      "id": 4,
+      "name": "Mohamed Herguem",
+      "position": "Treasurer",
+      "image": "https://via.placeholder.com/150/ef4444/ffffff?text=MH"
+    },
+    {
+      "id": 5,
+      "name": "Mahmoud Belghaïeb",
+      "position": "HR",
+      "image": "https://via.placeholder.com/150/3b82f6/ffffff?text=MB"
+    },
+    {
+      "id": 6,
+      "name": "Aziz Hbaili",
+      "position": "Media Manager",
+      "image": "https://via.placeholder.com/150/ef4444/ffffff?text=AH"
+    },
+    {
+      "id": 7,
+      "name": "Mohamed Mehdi Lakhzouri",
+      "position": "Webmaster",
+      "image": "https://via.placeholder.com/150/3b82f6/ffffff?text=MML"
+    },
+    {
+      "id": 8,
+      "name": "Mohamed Bouzayani",
+      "position": "Project Manager",
+      "image": "https://via.placeholder.com/150/ef4444/ffffff?text=MB2"
+    }
+  ],
+  "stats": {
+    "chapters": 8,
+    "groups": 2,
+    "members": 1025,
+    "activities": 170,
+    "awards": 25
+  },
+  "awards": [
+    "IEEE Outstanding Branch Counselor and Branch Chapter Advisor Award 2022",
+    "IEEE R8 Medium Student Branch Chapter of the Year Award",
+    "IEEE Region 8 Large Student Branch Chapter of the Year 2021 Award",
+    "IEEE Tunisia Section Outstanding LARGE Student Branch Award 2021",
+    "IEEE Tunisia Section Women In Engineering Affinity Group Award 2021",
+    "IEEE WIE Student Branch Affinity Group of the Year Award",
+    "R8 Large Student Branch Chapter of the Year Award 2022",
+    "Region 8 SIGHT Student Branch of the Year 2022 Award",
+    "The Darrel Chong Student Activity Award Bronze 2022",
+    "The Most Inspiring IEEE Region 8 SIGHT DAY 2023 celebration"
+  ],
+  "chapters": [
+    {
+      "id": 1,
+      "name": "Computer Society",
+      "description": "Advancing computing technology for humanity",
+      "image": "https://via.placeholder.com/200/3b82f6/ffffff?text=CS"
+    },
+    {
+      "id": 2,
+      "name": "Power & Energy Society",
+      "description": "Leading the future of energy technology",
+      "image": "https://via.placeholder.com/200/ef4444/ffffff?text=PES"
+    },
+    {
+      "id": 3,
+      "name": "Communications Society",
+      "description": "Connecting the world through communication technology",
+      "image": "https://via.placeholder.com/200/3b82f6/ffffff?text=ComSoc"
+    },
+    {
+      "id": 4,
+      "name": "Robotics & Automation Society",
+      "description": "Advancing robotics and automation for society",
+      "image": "https://via.placeholder.com/200/ef4444/ffffff?text=RAS"
+    },
+    {
+      "id": 5,
+      "name": "Signal Processing Society",
+      "description": "Processing signals for a better world",
+      "image": "https://via.placeholder.com/200/3b82f6/ffffff?text=SPS"
+    },
+    {
+      "id": 6,
+      "name": "Engineering in Medicine & Biology Society",
+      "description": "Engineering solutions for healthcare",
+      "image": "https://via.placeholder.com/200/ef4444/ffffff?text=EMBS"
+    },
+    {
+      "id": 7,
+      "name": "Photonics Society",
+      "description": "Illuminating the future with photonics",
+      "image": "https://via.placeholder.com/200/3b82f6/ffffff?text=PS"
+    },
+    {
+      "id": 8,
+      "name": "Aerospace & Electronic Systems Society",
+      "description": "Advancing aerospace and electronic systems",
+      "image": "https://via.placeholder.com/200/ef4444/ffffff?text=AESS"
+    }
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "name": "Women in Engineering (WIE)",
+      "description": "Promoting women engineers and inspiring girls to follow their academic interests in a career in engineering",
+      "image": "https://via.placeholder.com/200/ef4444/ffffff?text=WIE"
+    },
+    {
+      "id": 2,
+      "name": "Special Interest Group on Humanitarian Technology (SIGHT)",
+      "description": "Leveraging technology for humanitarian benefit and sustainable development",
+      "image": "https://via.placeholder.com/200/3b82f6/ffffff?text=SIGHT"
+    }
+  ],
+  "mission": "To foster technological innovation and excellence for the benefit of humanity through a vibrant community of IEEE student members.",
+  "vision": "To be the leading student organization at ESPRIT that bridges academic learning with real-world technological applications, preparing students to become future leaders in engineering and technology."
+}
