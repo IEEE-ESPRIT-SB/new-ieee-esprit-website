@@ -160,7 +160,7 @@ export default function UnitsPage() {
       scale: 1,
       rotateX: 0,
       transition: {
-        type: "spring",
+        type: "spring" as "spring",
         stiffness: 100,
         damping: 15,
         duration: 0.8
@@ -174,7 +174,7 @@ export default function UnitsPage() {
       scale: 1, 
       rotate: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 200,
         damping: 10,
         delay: 0.2
