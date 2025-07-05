@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import AwardsCarousel from '@/components/awards/AwardsCarousel';
+import AwardsCarousel from '../../components/awards/AwardsCarousel'; 
 
 export default function AwardsPage() {
   return (

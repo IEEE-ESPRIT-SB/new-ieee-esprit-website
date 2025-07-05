@@ -28,7 +28,7 @@ export default function Home() {
   const [shootingStars, setShootingStars] = useState([]);
   const [coloredCircles, setColoredCircles] = useState([]);
   const [loadingComplete, setLoadingComplete] = useState(false);
-  const splineRef = useRef();
+  const _splineRef = useRef();
 
   // Memoization des couleurs pour éviter les recalculs
   const colors = useMemo(() => ({

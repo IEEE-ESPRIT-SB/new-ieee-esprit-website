@@ -36,7 +36,7 @@ export default function EventsPage() {
   const [events, setEvents] = useState([]);
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [windowWidth, setWindowWidth] = useState(1200);
+  const [_windowWidth, setWindowWidth] = useState(1200);
   const splineRef = useRef();
 
   // Debounced search state

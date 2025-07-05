@@ -19,14 +19,41 @@ interface Unit {
   color: string;
 }
 
+interface Star {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  delay: number;
+  color: string;
+  opacity: number;
+  isGlowing: boolean;
+}
+
+interface ShootingStar {
+  id: number;
+  x: number;
+  y: number;
+  duration: number;
+}
+
+interface ColoredCircle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  color: string;
+}
+
 export default function UnitsPage() {
   const [preloading, setPreloading] = useState(true);
-  const [stars, setStars] = useState<any[]>([]);
-  const [shootingStars, setShootingStars] = useState<any[]>([]);
-  const [coloredCircles, setColoredCircles] = useState<any[]>([]);
+  const [stars, setStars] = useState<Star[]>([]);
+  const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
+  const [coloredCircles, setColoredCircles] = useState<ColoredCircle[]>([]);
   const [loadingComplete, setLoadingComplete] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+  const [_visibleCards, _setVisibleCards] = useState<Set<string>>(new Set());
 
   const units = useMemo(() => Object.entries(unitsData as Record<string, Unit>), []);
 
@@ -123,7 +150,7 @@ export default function UnitsPage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleCards(prev => new Set([...prev, entry.target.id]));
+            _setVisibleCards(prev => new Set([...prev, entry.target.id]));
           }
         });
       },
@@ -160,7 +187,7 @@ export default function UnitsPage() {
       scale: 1,
       rotateX: 0,
       transition: {
-        type: "spring" as "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 15,
         duration: 0.8
@@ -367,7 +394,7 @@ export default function UnitsPage() {
             marginBottom: '4rem'
           }}
         >
-          {units.map(([key, unit], index) => (
+          {units.map(([key, unit]) => (
             <motion.div
               key={key}
               id={`unit-${key}`}
