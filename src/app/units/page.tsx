@@ -303,7 +303,7 @@ export default function UnitsPage() {
           >
             <Sparkles className="inline-block w-6 h-6 mr-2 text-blue-400" />
             <span className="text-blue-300 font-medium tracking-wider text-sm uppercase">
-              Découvrez nos unités
+              Discover our units
             </span>
           </motion.div>
 
@@ -363,19 +363,19 @@ export default function UnitsPage() {
           >
             <div className="stat-item">
               <div className="stat-number">{units.length}</div>
-              <div className="stat-label">Unités</div>
+              <div className="stat-label">Units</div>
             </div>
             <div className="stat-item">
               <div className="stat-number">
                 {units.reduce((sum, [, unit]) => sum + unit.numberOfMembers, 0)}
               </div>
-              <div className="stat-label">Membres</div>
+              <div className="stat-label">Members</div>
             </div>
             <div className="stat-item">
               <div className="stat-number">
                 {units.reduce((sum, [, unit]) => sum + unit.numberOfActivities, 0)}
               </div>
-              <div className="stat-label">Activités</div>
+              <div className="stat-label">Activities</div>
             </div>
           </motion.div>
         </motion.section>
@@ -588,7 +588,7 @@ export default function UnitsPage() {
                   }}
                 >
                   <Globe size={16} />
-                  Site Web
+                  Website
                 </motion.a>
                 
                 <motion.a
