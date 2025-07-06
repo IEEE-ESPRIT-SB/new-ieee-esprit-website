@@ -49,15 +49,17 @@ const AwardsCarousel = () => {
     return (
     <div className="awards-section">
       {/* Particle effects */}
-      <div className="particles-container">
-        {mounted && particles.map((particle, i) => (
-          <div
-            key={`particle-${i}`}
-            className="particle"
-            style={particle}
-          />
-        ))}
-      </div>
+      {mounted && (
+        <div className="particles-container">
+          {particles.map((particle, i) => (
+            <div
+              key={`particle-${i}`}
+              className="particle"
+              style={particle}
+            />
+          ))}
+        </div>
+      )}
         {/* Left to Right Carousel */}
       <div className="awards-carousel-container">
         <div 
@@ -71,14 +73,14 @@ const AwardsCarousel = () => {
                 <Image 
                   src={award.src} 
                   alt={award.alt}
-                  width={280}
-                  height={200}
+                  width={180}
+                  height={140}
                   style={{
                     objectFit: 'cover',
                     width: 'auto',
                     height: 'auto',
-                    maxWidth: '280px',
-                    maxHeight: '200px'
+                    maxWidth: '180px',
+                    maxHeight: '140px'
                   }}
                   priority={index < 3}
                 />
@@ -107,8 +109,7 @@ const AwardsCarousel = () => {
         </div>
       </div>
       
-      {/* Text Carousel with "IEEE ESPRIT SB" and "One One Legend" */}
-      <TextCarousel />
+      {/* Text Carousel with "IEEE ESPRIT SB" and "One One Legend" retiré */}
       
       {/* Right to Left Carousel */}
       <div className="awards-carousel-container">
@@ -123,14 +124,14 @@ const AwardsCarousel = () => {
                 <Image 
                   src={award.src} 
                   alt={award.alt}
-                  width={280}
-                  height={200}
+                  width={180}
+                  height={140}
                   style={{
                     objectFit: 'cover',
                     width: 'auto',
                     height: 'auto',
-                    maxWidth: '280px',
-                    maxHeight: '200px'
+                    maxWidth: '180px',
+                    maxHeight: '140px'
                   }}
                   priority={index < 3}
                 />

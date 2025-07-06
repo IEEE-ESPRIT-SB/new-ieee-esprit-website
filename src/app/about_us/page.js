@@ -4,10 +4,10 @@ import Head from 'next/head';
 import { AnimatePresence } from 'framer-motion';
 import Preloader from '../../components/Preloader';
 import Navbar from '../../components/Navbar';
-import ExBoardItem from '../../components/ExBoardItem';
-import StatistiqueSection from '../../components/statistique/StatistiqueSection';
+import ExBoardItem from '../../components/excom/ExBoardItem';
 import AwardsCarousel from '../../components/awards/AwardsCarousel';
 import LocationSection from '../../components/location/LocationSection';
+import StatisticsSection from '../../components/StatisticsSection';
 import exboard from '../../assets/exboard.json';
 
 export default function Home() {
@@ -26,82 +26,67 @@ export default function Home() {
         setLoadingComplete(true);
       }, 500);
 
-      // Clear second timer if component unmounts before it fires
       return () => clearTimeout(completeTimer);
     }, 500);
 
-    // Clear first timer if component unmounts before it fires
     return () => clearTimeout(preloadTimer);
   }, []);
 
   // Generate colored circles to exactly match the background in the example image
   useEffect(() => {
     const generateColoredCircles = () => {
-      // Colors sampled directly from the example image
       const colors = {
-        darkBlue: '#0a0b30',    // Base dark blue
-        mediumBlue: '#141654',  // Medium blue
-        brightBlue: '#1e1c7c',  // Brighter blue accent
-        purple: '#2c1a5a'       // Purple accent
+        darkBlue: '#0a0b30',
+        mediumBlue: '#141654',
+        brightBlue: '#1e1c7c',
+        purple: '#2c1a5a'
       };
       
-      // Create circles based on exact placement in the example image
       const newCircles = [
-        // Left edge gradient - dark blue
         {
           id: 0,
-          x: -10,  // Positioned slightly off-screen to the left
-          y: 50,   // Middle of screen
+          x: -10,
+          y: 50,
           size: 800,
           opacity: 0.8,
           color: colors.darkBlue
         },
-        
-        // Right edge gradient - purple
         {
           id: 1,
-          x: 110,  // Positioned slightly off-screen to the right
-          y: 50,   // Middle of screen
+          x: 110,
+          y: 50,
           size: 800,
           opacity: 0.8,
           color: colors.purple
         },
-        
-        // Top center gradient - medium blue
         {
           id: 2,
-          x: 50,   // Center horizontally
-          y: 0,    // Top edge
+          x: 50,
+          y: 0,
           size: 700,
           opacity: 0.7,
           color: colors.mediumBlue
         },
-        
-        // Bottom center gradient - brighter blue
         {
           id: 3,
-          x: 50,   // Center horizontally
-          y: 100,  // Bottom edge
+          x: 50,
+          y: 100,
           size: 500,
           opacity: 0.7,
           color: colors.brightBlue
         },
-        
-        // Upper right accent - purple
         {
           id: 4,
-          x: 80,   // Upper right area
-          y: 25,   // Upper area
+          x: 80,
+          y: 25,
           size: 500,
           opacity: 0.2,
           color: colors.purple
         },
-        
-        // Lower left accent - medium blue
         {
           id: 5,
-          x: 20,   // Lower left area
-          y: 75,   // Lower area
+          x: 20,
+          y: 75,
           size: 500,
           opacity: 0.4,
           color: colors.mediumBlue
@@ -112,39 +97,24 @@ export default function Home() {
     };
     
     generateColoredCircles();
-    
-    // No need to regenerate colored circles on resize as they should stay fixed
   }, []);
 
   // Generate random stars with different sizes
   useEffect(() => {
-    // Create stars with varying sizes
     const generateStars = () => {
       const starCount = Math.min(150, Math.floor(window.innerWidth * window.innerHeight / 10000));
       const newStars = [];
       const starColors = ['#FDFDFD', '#b8beea'];
       
-      // Determine how many stars should glow (approximately 10-15% of stars)
       const glowingStarsCount = Math.floor(starCount * (Math.random() * 0.05 + 0.05));
       
       for (let i = 0; i < starCount; i++) {
-        // Generate random positions
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        
-        // Generate random sizes (1-3px for regular stars)
         const size = Math.random() * 2 + 1;
-        
-        // Generate random delay for the twinkle animation
         const delay = Math.random() * 4;
-        
-        // Generate random color from the specified colors
         const color = starColors[Math.floor(Math.random() * starColors.length)];
-        
-        // Generate random opacity between 0.4 and 1
         const opacity = Math.random() * 0.6 + 0.4;
-        
-        // Determine if this star should glow (only a small number will glow)
         const isGlowing = i < glowingStarsCount;
         
         newStars.push({
@@ -164,7 +134,6 @@ export default function Home() {
     
     generateStars();
     
-    // Regenerate stars when window is resized
     const handleResize = () => {
       generateStars();
     };
@@ -181,11 +150,8 @@ export default function Home() {
     let shootingStarId = 0;
     
     const createShootingStar = () => {
-      // Generate random position for the shooting star
-      const x = Math.random() * 50; // Start in the left half of the screen
-      const y = Math.random() * 30; // Start in the top portion
-      
-      // Generate random duration (2-6 seconds)
+      const x = Math.random() * 50;
+      const y = Math.random() * 30;
       const duration = Math.random() * 4 + 2;
       
       const newShootingStar = {
@@ -197,16 +163,13 @@ export default function Home() {
       
       setShootingStars(prev => [...prev, newShootingStar]);
       
-      // Remove the shooting star after animation completes
       setTimeout(() => {
         setShootingStars(prev => prev.filter(star => star.id !== newShootingStar.id));
       }, duration * 1000);
     };
     
-    // Create initial shooting star
     createShootingStar();
     
-    // Create new shooting stars at random intervals (3-8 seconds)
     const interval = setInterval(() => {
       createShootingStar();
     }, (Math.random() * 5000 + 3000));
@@ -239,7 +202,6 @@ return (
         <meta name="twitter:image" content="https://ieee-esprit.tn/og-aboutus.jpg" />
         <link rel="canonical" href="https://ieee-esprit.tn/about_us" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* JSON-LD Organization Schema */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
@@ -260,7 +222,6 @@ return (
         {preloading && <Preloader />}
       </AnimatePresence>
       <div className="night-sky" style={{ opacity: 1, transition: 'opacity 0.5s ease-in-out' }}>
-        {/* Render colored background circles */}
         {coloredCircles.map(circle => (
           <div
             key={circle.id}
@@ -281,7 +242,6 @@ return (
           />
         ))}
         
-        {/* Render stars */}
         {stars.map(star => (
           <div
             key={star.id}
@@ -300,7 +260,6 @@ return (
           />
         ))}
         
-        {/* Render shooting stars */}
         {shootingStars.map(star => (
           <div
             key={star.id}
@@ -314,10 +273,9 @@ return (
         ))}
       </div>
 
-      {/* Main content container */}
       <main className="content-container" style={{ opacity: loadingComplete ? 1 : 0, transition: 'opacity 0.5s ease-in-out 0.3s' }}>
-        {/* Navigation */}
         <Navbar active="about" />
+        
         {/* Meet the Team Section */}
         <section style={{
           padding: '2rem 0 3rem 0',
@@ -379,9 +337,10 @@ return (
             ))}
           </div>
         </section>
-        {/* Section Title: IEEE ESPRIT in Numbers */}
-        
-        <StatistiqueSection />
+
+        {/* Statistics Section */}
+        <StatisticsSection />
+
         {/* Awards Section */}
         <section style={{
           padding: '3rem 0',
@@ -412,7 +371,6 @@ return (
           </div>
           <AwardsCarousel />
         </section>
-        {/* Section Title: We're located in ESPRIT, Obviously! */}
         
         <LocationSection />
       </main>

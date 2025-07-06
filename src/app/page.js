@@ -1,9 +1,33 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import Typewriter from 'typewriter-effect';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Preloader from '../components/Preloader';
 import Navbar from '../components/Navbar';
+import Link from 'next/link';
+import { Sparkles, ArrowRight } from 'lucide-react';
+
+// Features data
+const features = [
+  {
+    title: "Active Community",
+    description: "Join a dynamic community of over 200 active members sharing the same passion for technology.",
+    icon: <Sparkles size={28} />,
+    color: "#6366f1"
+  },
+  {
+    title: "Regular Events",
+    description: "Participate in our workshops, hackathons and conferences with international experts.",
+    icon: <Sparkles size={28} />,
+    color: "#8b5cf6"
+  },
+  {
+    title: "Professional Development",
+    description: "Benefit from certified training and networking with industry professionals.",
+    icon: <Sparkles size={28} />,
+    color: "#ec4899"
+  }
+];
 
 export default function Home() {
   const [preloading, setPreloading] = useState(true);
@@ -21,127 +45,97 @@ export default function Home() {
         setLoadingComplete(true);
       }, 500);
 
-      // Clear second timer if component unmounts before it fires
       return () => clearTimeout(completeTimer);
     }, 500);
 
-    // Clear first timer if component unmounts before it fires
     return () => clearTimeout(preloadTimer);
   }, []);
 
-  // Generate colored circles to exactly match the background in the example image
+  // Generate colored circles
   useEffect(() => {
     const generateColoredCircles = () => {
-      // Colors sampled directly from the example image
       const colors = {
-        darkBlue: '#0a0b30',    // Base dark blue
-        mediumBlue: '#141654',  // Medium blue
-        brightBlue: '#1e1c7c',  // Brighter blue accent
-        purple: '#2c1a5a'       // Purple accent
+        darkBlue: '#0a0b30',
+        mediumBlue: '#141654',
+        brightBlue: '#1e1c7c',
+        purple: '#2c1a5a'
       };
-      
-      // Create circles based on exact placement in the example image
+
       const newCircles = [
-        // Left edge gradient - dark blue
         {
           id: 0,
-          x: -10,  // Positioned slightly off-screen to the left
-          y: 50,   // Middle of screen
+          x: -10,
+          y: 50,
           size: 800,
           opacity: 0.8,
           color: colors.darkBlue
         },
-        
-        // Right edge gradient - purple
         {
           id: 1,
-          x: 110,  // Positioned slightly off-screen to the right
-          y: 50,   // Middle of screen
+          x: 110,
+          y: 50,
           size: 800,
           opacity: 0.8,
           color: colors.purple
         },
-        
-        // Top center gradient - medium blue
         {
           id: 2,
-          x: 50,   // Center horizontally
-          y: 0,    // Top edge
+          x: 50,
+          y: 0,
           size: 700,
           opacity: 0.7,
           color: colors.mediumBlue
         },
-        
-        // Bottom center gradient - brighter blue
         {
           id: 3,
-          x: 50,   // Center horizontally
-          y: 100,  // Bottom edge
+          x: 50,
+          y: 100,
           size: 500,
           opacity: 0.7,
           color: colors.brightBlue
         },
-        
-        // Upper right accent - purple
         {
           id: 4,
-          x: 80,   // Upper right area
-          y: 25,   // Upper area
+          x: 80,
+          y: 25,
           size: 500,
           opacity: 0.2,
           color: colors.purple
         },
-        
-        // Lower left accent - medium blue
         {
           id: 5,
-          x: 20,   // Lower left area
-          y: 75,   // Lower area
+          x: 20,
+          y: 75,
           size: 500,
           opacity: 0.4,
           color: colors.mediumBlue
         }
       ];
-      
+
       setColoredCircles(newCircles);
     };
-    
+
     generateColoredCircles();
-    
-    // No need to regenerate colored circles on resize as they should stay fixed
   }, []);
 
-  // Generate random stars with different sizes
+  // Generate random stars
   useEffect(() => {
-    // Create stars with varying sizes
     const generateStars = () => {
       const starCount = Math.min(150, Math.floor(window.innerWidth * window.innerHeight / 10000));
       const newStars = [];
       const starColors = ['#FDFDFD', '#b8beea'];
-      
-      // Determine how many stars should glow (approximately 10-15% of stars)
+
       const glowingStarsCount = Math.floor(starCount * (Math.random() * 0.05 + 0.05));
-      
+
       for (let i = 0; i < starCount; i++) {
-        // Generate random positions
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        
-        // Generate random sizes (1-3px for regular stars)
         const size = Math.random() * 2 + 1;
-        
-        // Generate random delay for the twinkle animation
         const delay = Math.random() * 4;
-        
-        // Generate random color from the specified colors
         const color = starColors[Math.floor(Math.random() * starColors.length)];
-        
-        // Generate random opacity between 0.4 and 1
         const opacity = Math.random() * 0.6 + 0.4;
-        
-        // Determine if this star should glow (only a small number will glow)
         const isGlowing = i < glowingStarsCount;
-        
+
         newStars.push({
           id: i,
           x,
@@ -153,71 +147,60 @@ export default function Home() {
           isGlowing
         });
       }
-      
+
       setStars(newStars);
     };
-    
+
     generateStars();
-    
-    // Regenerate stars when window is resized
+
     const handleResize = () => {
       generateStars();
     };
-    
+
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  // Create shooting stars at random intervals
+  // Create shooting stars
   useEffect(() => {
     let shootingStarId = 0;
-    
+
     const createShootingStar = () => {
-      // Generate random position for the shooting star
-      const x = Math.random() * 50; // Start in the left half of the screen
-      const y = Math.random() * 30; // Start in the top portion
-      
-      // Generate random duration (2-6 seconds)
+      const x = Math.random() * 50;
+      const y = Math.random() * 30;
       const duration = Math.random() * 4 + 2;
-      
+
       const newShootingStar = {
         id: shootingStarId++,
         x,
         y,
         duration
       };
-      
+
       setShootingStars(prev => [...prev, newShootingStar]);
-      
-      // Remove the shooting star after animation completes
+
       setTimeout(() => {
         setShootingStars(prev => prev.filter(star => star.id !== newShootingStar.id));
       }, duration * 1000);
     };
-    
-    // Create initial shooting star
+
     createShootingStar();
-    
-    // Create new shooting stars at random intervals (3-8 seconds)
+
     const interval = setInterval(() => {
       createShootingStar();
     }, (Math.random() * 5000 + 3000));
-    
+
     return () => clearInterval(interval);
   }, []);
 
   function handleMouseMove(e) {
-    // Get normalized mouse coordinates (-1 to 1)
     const x = (e.clientX / window.innerWidth) * 2 - 1;
     const y = -((e.clientY / window.innerHeight) * 2 - 1);
-
-    // Adjust these values to fit your scene's scale and camera
     const lookTargetPosition = { x: x * 5, y: y * 2, z: 0 };
 
-    // Move the null object in Spline
     if (splineRef.current) {
       splineRef.current.emitEvent('setPosition', 'LookTarget', lookTargetPosition);
     }
@@ -228,8 +211,10 @@ export default function Home() {
       <AnimatePresence mode="wait">
         {preloading && <Preloader />}
       </AnimatePresence>
+
+      {/* Night Sky Background */}
       <div className="night-sky" style={{ opacity: 1, transition: 'opacity 0.5s ease-in-out' }}>
-        {/* Render colored background circles */}
+        {/* Colored circles */}
         {coloredCircles.map(circle => (
           <div
             key={circle.id}
@@ -241,7 +226,7 @@ export default function Home() {
               backgroundColor: 'transparent',
               borderRadius: '50%',
               position: 'absolute',
-              boxShadow: `0 0 ${circle.size/2}px ${circle.size/2}px ${circle.color}`,
+              boxShadow: `0 0 ${circle.size / 2}px ${circle.size / 2}px ${circle.color}`,
               opacity: circle.opacity * 0.7,
               filter: 'blur(40px)',
               zIndex: 1,
@@ -249,8 +234,8 @@ export default function Home() {
             }}
           />
         ))}
-        
-        {/* Render stars */}
+
+        {/* Stars */}
         {stars.map(star => (
           <div
             key={star.id}
@@ -268,8 +253,8 @@ export default function Home() {
             }}
           />
         ))}
-        
-        {/* Render shooting stars */}
+
+        {/* Shooting stars */}
         {shootingStars.map(star => (
           <div
             key={star.id}
@@ -283,17 +268,68 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Main content container */}
-      
+      {/* Main Content */}
       <main className="content-container" style={{ opacity: loadingComplete ? 1 : 0, transition: 'opacity 0.5s ease-in-out 0.3s' }} onMouseMove={handleMouseMove}>
-        {/* Navigation */}
         <Navbar active="home" />
 
-        {/* Hero section */}
-        <section className="hero-section">
-          <h1 className="hero-title">
-            <span style={{ display: 'inline-block' }}>We Are</span>
-            <span className="highlight" style={{ display: 'inline-block', marginLeft: '10px' }}>
+        {/* Hero Section */}
+        <motion.section
+          style={{
+            textAlign: 'center',
+            marginTop: '0',
+            paddingTop: '2rem',
+            padding: '2rem 1rem 1rem 1rem',
+            minHeight: '85vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.7 }}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              background: 'rgba(99, 102, 241, 0.1)',
+              border: '1px solid rgba(99, 102, 241, 0.3)',
+              borderRadius: '50px',
+              padding: '0.4rem 0.875rem',
+              marginBottom: '1rem',
+              backdropFilter: 'blur(10px)'
+            }}
+          >
+            <Sparkles className="inline-block w-5 h-5 mr-2 text-blue-400" />
+            <span className="text-blue-300 font-medium tracking-wider text-sm uppercase">
+              IEEE Student Branch ESPRIT
+            </span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.8 }}
+            style={{
+              fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+              fontWeight: '900',
+              lineHeight: '1.2',
+              textAlign: 'center',
+              color: '#fff',
+              marginBottom: '0.75rem',
+              fontFamily: '"Playfair Display", serif'
+            }}
+          >
+            <span style={{ display: 'inline-block' }}>We Are</span>{' '}
+            <span style={{
+              display: 'inline-block',
+              marginLeft: '10px',
+              background: 'linear-gradient(90deg, #B92031, #FF4E50)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
               <Typewriter
                 options={{
                   strings: ['IEEE', 'Engineers', 'Innovators'],
@@ -301,37 +337,263 @@ export default function Home() {
                   loop: true,
                   delay: 50,
                   deleteSpeed: 50,
-                  pauseFor: 3000,
+                  pauseFor: 2000,
                 }}
               />
             </span>
-          </h1>
-          <div className="hero-subtitle">
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.1 }}
+            style={{
+              maxWidth: '800px',
+              margin: '0 auto 1rem auto',
+              fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
+              lineHeight: '1.6',
+              fontWeight: '400',
+              color: 'rgba(255, 255, 255, 0.85)',
+              fontFamily: '"Inter", sans-serif',
+              textAlign: 'center'
+            }}
+          >
             <Typewriter
               onInit={(typewriter) => {
                 typewriter
-                .typeString('We are IEEE Student Branch at ESPRIT, passionate about advancing technology and fostering innovation through impactful initiatives and professional development.')
-                .start();
+                  .typeString("We are IEEE Student Branch at ESPRIT, passionate about advancing technology and fostering innovation through impactful initiatives and professional development.")
+                  .start();
               }}
               options={{
                 loop: false,
                 delay: 20,
               }}
             />
-          </div>
-        </section>
+          </motion.div>
 
-        {/* Footer */}
-        <footer className="main-footer">
-          <p>© 2025 Cosmic Exploration. All rights reserved.</p>
-          <div className="social-links">
-            <a href="#" aria-label="Twitter">🐦</a>
-            <a href="#" aria-label="Instagram">📸</a>
-            <a href="#" aria-label="Facebook">👍</a>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.3 }}
+            style={{
+              display: 'flex',
+              gap: '0.5rem',
+              flexWrap: 'wrap',
+              justifyContent: 'center'
+            }}
+          >
+            <Link href="/about_us" style={{ textDecoration: 'none' }}>
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(185, 32, 49, 0.5)' }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: 'linear-gradient(90deg, #B92031, #FF4E50)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '14px',
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                Learn more About us
+                <ArrowRight size={20} />
+              </motion.button>
+            </Link>
+
+            <Link href="/units" style={{ textDecoration: 'none' }}>
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(185, 32, 49, 0.3)' }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: 'rgba(185, 32, 49, 0.1)',
+                  color: '#ffffff',
+                  border: '1px solid rgba(185, 32, 49, 0.4)',
+                  borderRadius: '14px',
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(10px)'
+                }}
+              >
+                Discover our units
+              </motion.button>
+            </Link>
+          </motion.div>
+        </motion.section>
+
+        {/* Features Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 50 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          style={{
+            padding: '2rem 1rem',
+            marginBottom: '1rem'
+          }}
+        >
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '2rem'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(1.75rem, 5vw, 2.75rem)',
+              fontWeight: '700',
+              color: '#ffffff',
+              marginBottom: '0.75rem',
+              fontFamily: '"Playfair Display", serif'
+            }}>
+              Why IEEE ESPRIT?
+            </h2>
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              A dynamic community at the heart of technological innovation
+            </p>
           </div>
-        </footer>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '1.25rem',
+            maxWidth: '1200px',
+            margin: '0 auto'
+          }}>
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.7 + index * 0.2 }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                  boxShadow: `0 25px 50px ${feature.color}25`
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '18px',
+                  padding: '1.25rem',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.4s ease'
+                }}
+              >
+                <div style={{
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '14px',
+                  background: `linear-gradient(135deg, ${feature.color}20, ${feature.color}10)`,
+                  border: `2px solid ${feature.color}30`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem auto',
+                  color: feature.color
+                }}>
+                  {feature.icon}
+                </div>
+
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.35rem)',
+                  fontWeight: '600',
+                  color: '#ffffff',
+                  marginBottom: '0.5rem'
+                }}>
+                  {feature.title}
+                </h3>
+
+                <p style={{
+                  color: 'rgba(255, 255, 255, 0.75)',
+                  lineHeight: '1.5',
+                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)'
+                }}>
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+       
+        
       </main>
-      
+
+      <style jsx>{`
+        @keyframes twinkle {
+          0%, 100% { 
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% { 
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+
+        @keyframes twinkle-glow {
+          0%, 100% { 
+            opacity: 0.2;
+            box-shadow: 0 0 10px 2px currentColor, 0 0 3px 1px currentColor;
+            transform: scale(1);
+          }
+          50% { 
+            opacity: 0.8;
+            box-shadow: 0 0 20px 5px currentColor, 0 0 8px 3px currentColor;
+            transform: scale(1.3);
+          }
+        }
+
+        @keyframes shoot {
+          0% {
+            opacity: 1;
+            transform: translateX(0) translateY(0) rotate(-45deg);
+          }
+          100% {
+            opacity: 0;
+            transform: translateX(400px) translateY(400px) rotate(-45deg);
+          }
+        }
+
+        .shooting-star::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 120px;
+          height: 2px;
+          background: linear-gradient(90deg, #ffffff, transparent);
+          transform: translateX(-100%);
+        }
+
+        .night-sky {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          overflow: hidden;
+          z-index: -1;
+          background-color: #070825;
+          pointer-events: none;
+        }
+      `}</style>
     </>
   );
 }

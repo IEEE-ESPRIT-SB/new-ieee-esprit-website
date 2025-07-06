@@ -1,0 +1,247 @@
+'use client';
+import { useEffect, useState, useRef } from 'react';
+
+interface StatisticItemProps {
+  number: number;
+  label: string;
+  delay: number;
+}
+
+const StatisticItem = ({ number, label, delay }: StatisticItemProps) => {
+  const [displayNumber, setDisplayNumber] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsVisible(true);
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (itemRef.current) {
+      observer.observe(itemRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const timer = setTimeout(() => {
+      const duration = 2000; // 2 seconds
+      const startTime = Date.now();
+      const startValue = 0;
+
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentValue = Math.round(startValue + (number - startValue) * easeOutQuart);
+        
+        setDisplayNumber(currentValue);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [isVisible, number, delay]);
+  return (
+    <div
+      ref={itemRef}
+      className={`statistic-item ${isVisible ? 'animate-in' : ''}`}
+      style={{
+        background: 'rgba(10, 11, 48, 0.4)',
+        backdropFilter: 'blur(20px)',
+        borderRadius: '20px',
+        padding: '2rem 1.5rem',
+        textAlign: 'center',
+        border: '1px solid rgba(184, 190, 234, 0.2)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(184, 190, 234, 0.1)',
+        transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
+        opacity: isVisible ? 1 : 0,
+        transitionDelay: `${delay}ms`,
+        position: 'relative',
+        overflow: 'hidden',
+        minHeight: '220px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+    
+      {/* Subtle gradient overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(135deg, rgba(184, 190, 234, 0.05) 0%, rgba(30, 28, 124, 0.05) 100%)',
+          borderRadius: '20px',
+          pointerEvents: 'none'
+        }}
+      />
+      
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <div
+          style={{
+            fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+            fontWeight: 800,
+            color: '#ffffff',
+            marginBottom: '0.5rem',
+            fontFamily: "'Playfair Display', serif",
+            textShadow: '0 2px 20px rgba(184, 190, 234, 0.3)',
+            lineHeight: 1
+          }}
+          aria-live="polite"
+          aria-label={`${number} ${label}`}
+        >
+          {displayNumber.toLocaleString()}
+        </div>
+        <div
+          style={{
+            fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
+            color: '#b8beea',
+            fontWeight: 500,
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+            lineHeight: 1.2
+          }}
+        >
+          {label}
+        </div>
+      </div>
+
+      {/* Hover glow effect */}
+      <style jsx>{`
+        .statistic-item:hover {
+          transform: translateY(-8px) scale(1.02) !important;
+          border-color: rgba(184, 190, 234, 0.4);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(184, 190, 234, 0.2);
+        }
+      `}</style>
+      
+      {/* Global responsive styles */}
+      <style jsx global>{`
+        .statistics-grid {
+          display: grid !important;
+          grid-template-columns: repeat(1, 1fr) !important;
+          gap: 1.5rem !important;
+        }
+        
+        @media (min-width: 640px) {
+          .statistics-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 2rem !important;
+          }
+        }
+        
+        @media (min-width: 768px) {
+          .statistics-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .statistics-grid {
+            grid-template-columns: repeat(5, 1fr) !important;
+            gap: clamp(1.5rem, 3vw, 2rem) !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default function StatisticsSection() {
+  const statistics = [
+    { number: 8, label: 'Chapters' },
+    { number: 2, label: 'Groups' },
+    { number: 1025, label: 'Members' },
+    { number: 170, label: 'Annual Activities' },
+    { number: 25, label: 'Awards' }
+  ];
+
+  return (
+    <section
+      style={{
+        padding: '4rem 0',
+        position: 'relative',
+        zIndex: 3,
+        maxWidth: '1200px',
+        margin: '0 auto'
+      }}
+      aria-labelledby="statistics-heading"
+    >
+      <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <h2
+          id="statistics-heading"
+          style={{
+            fontFamily: "'Playfair Display', 'Times New Roman', serif",
+            fontSize: 'clamp(2rem, 6vw, 3rem)',
+            color: '#b8beea',
+            fontWeight: 700,
+            letterSpacing: '-0.025em',
+            lineHeight: '1.2',
+            marginBottom: '1rem',
+            textShadow: '0 2px 16px rgba(10, 11, 48, 0.8)'
+          }}
+        >
+          Our Impact in Numbers
+        </h2>
+        <p
+          style={{
+            color: '#b8beea',
+            fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+            fontWeight: 400,
+            letterSpacing: '0.04em',
+            opacity: 0.9,
+            maxWidth: '600px',
+            margin: '0 auto'
+          }}
+        >
+          Driving innovation and excellence across the IEEE community
+        </p>
+      </header>
+
+      <dl
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(1, 1fr)',
+          gap: '1.5rem',
+          padding: '0 1rem'
+        }}
+        className="statistics-grid"
+        role="list"
+        aria-label="IEEE ESPRIT SB statistics"
+      >
+        {statistics.map((stat, index) => (
+          <div key={stat.label} role="listitem">
+            <StatisticItem
+              number={stat.number}
+              label={stat.label}
+              delay={index * 150}
+            />
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
