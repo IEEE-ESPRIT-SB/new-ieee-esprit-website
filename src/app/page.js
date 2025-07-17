@@ -8,7 +8,7 @@ import Link from 'next/link';
 import NightSkyBackground from '../components/background/NightSkyBackground';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
-const features = [
+const _features = [
   {
     title: "Active Community",
     description: "Join a dynamic community of over 200 active members sharing the same passion for technology.",
