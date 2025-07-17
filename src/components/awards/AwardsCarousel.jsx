@@ -4,10 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getSplitAwardImages } from '../../assets/awardImages';
 import TextCarousel from './TextCarousel';
-import './AwardsCarousel.css';
-import './responsive.css';
-import './LegendSeparator.css';
-import './single-line-fixes.css';
+import './awards.scss';
 
 const AwardsCarousel = () => {
   const [firstHalfAwards, setFirstHalfAwards] = useState([]);

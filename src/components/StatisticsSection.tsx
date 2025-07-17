@@ -104,10 +104,10 @@ const StatisticItem = ({ number, label, delay }: StatisticItemProps) => {
           style={{
             fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
             fontWeight: 800,
+            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
             color: '#ffffff',
             marginBottom: '0.5rem',
-            fontFamily: "'Playfair Display', serif",
-            textShadow: '0 2px 20px rgba(184, 190, 234, 0.3)',
+            textShadow: '0 2px 20px rgba(255, 255, 255, 0.3)',
             lineHeight: 1
           }}
           aria-live="polite"
@@ -118,11 +118,13 @@ const StatisticItem = ({ number, label, delay }: StatisticItemProps) => {
         <div
           style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
-            color: '#b8beea',
+            color: '#e6e6ff',
             fontWeight: 500,
+            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
             letterSpacing: '0.05em',
             textTransform: 'uppercase',
-            lineHeight: 1.2
+            lineHeight: 1.2,
+            textShadow: '0 2px 12px rgba(230, 230, 255, 0.4)'
           }}
         >
           {label}
@@ -194,27 +196,36 @@ export default function StatisticsSection() {
         <h2
           id="statistics-heading"
           style={{
-            fontFamily: "'Playfair Display', 'Times New Roman', serif",
-            fontSize: 'clamp(2rem, 6vw, 3rem)',
-            color: '#b8beea',
-            fontWeight: 700,
-            letterSpacing: '-0.025em',
-            lineHeight: '1.2',
+            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+            color: '#ffffff',
+            fontWeight: 800,
+            letterSpacing: '-0.02em',
+            lineHeight: '1.1',
+            textAlign: 'center',
             marginBottom: '1rem',
-            textShadow: '0 2px 16px rgba(10, 11, 48, 0.8)'
+            background: 'linear-gradient(135deg, #ffffff 0%, #f0f0ff 50%, #ffffff 100%)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
+            filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
           }}
         >
           Our Impact in Numbers
         </h2>
         <p
           style={{
-            color: '#b8beea',
-            fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-            fontWeight: 400,
-            letterSpacing: '0.04em',
+            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            color: '#e6e6ff',
+            fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
+            fontWeight: 500,
+            letterSpacing: '0.06em',
             opacity: 0.9,
             maxWidth: '600px',
-            margin: '0 auto'
+            margin: '0 auto',
+            textAlign: 'center',
+            textShadow: '0 2px 12px rgba(230, 230, 255, 0.4)'
           }}
         >
           Driving innovation and excellence across the IEEE community

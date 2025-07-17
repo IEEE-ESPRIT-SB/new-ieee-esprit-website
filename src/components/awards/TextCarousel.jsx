@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import './TextCarousel.css';
+import './awards.scss';
 
 const TextCarousel = () => {
   const trackRef = useRef(null);

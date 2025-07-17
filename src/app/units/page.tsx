@@ -3,9 +3,9 @@ import { useEffect, useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ExternalLink, Users, Calendar, Globe, ArrowRight, Sparkles, Zap, Target } from 'lucide-react';
 import Preloader from '../../components/Preloader';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import unitsData from './units.json';
-import './units.css';
+import './units.scss';
 
 interface Unit {
   name: string;
@@ -311,20 +311,25 @@ export default function UnitsPage() {
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
-            className="hero-title"
-            style={{ 
-              fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-              fontWeight: '900', 
+            className="hero-title text-display"
+            style={{
+              fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+              fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+              color: '#ffffff',
+              fontWeight: 800,
               letterSpacing: '-0.02em',
               lineHeight: '1.1',
-              marginBottom: '1.5rem',
-              marginTop: '1rem',
-              background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 25%, #94a3b8 50%, #64748b 75%, #ffffff 100%)',
+              textAlign: 'center',
+              marginBottom: '1rem',
+              padding: '0 1rem',
+              wordBreak: 'break-word',
+              hyphens: 'auto',
+              background: 'linear-gradient(135deg, #ffffff 0%, #e6e6ff 50%, #ffffff 100%)',
+              backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              textShadow: '0 4px 20px rgba(255, 255, 255, 0.1)',
-              fontFamily: 'var(--font-display, "Playfair Display", serif)'
+              textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
+              filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
             }}
           >
             Our Units
@@ -334,15 +339,16 @@ export default function UnitsPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.1 }}
-            className="hero-subtitle"
-            style={{ 
-              color: 'rgba(255, 255, 255, 0.8)', 
-              fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-              fontWeight: '400',
+            className="hero-subtitle text-body-large"
+            style={{
+              maxWidth: '800px',
+              margin: '0 auto 1rem auto',
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
               lineHeight: '1.6',
-              maxWidth: '800px', 
-              margin: '0 auto 3rem auto',
-              fontFamily: 'var(--font-body, "Inter", sans-serif)'
+              fontWeight: 400,
+              color: 'var(--text-secondary)',
+              textAlign: 'center',
+              letterSpacing: '0.01em'
             }}
           >
             Explore our various IEEE Technical Societies, each dedicated to a specialized area of ​​engineering and technology.

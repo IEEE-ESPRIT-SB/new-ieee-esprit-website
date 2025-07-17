@@ -1,5 +1,4 @@
 /* LocationSection.css - Optimized */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
 .location-section {
   width: 100%;
@@ -11,24 +10,6 @@
   font-family: 'Montserrat', sans-serif;
   margin-top: 2rem;
 }
-
-/* Animated background effect - REMOVED */
-/*
-.location-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('/icons/innovation.png') repeat;
-  background-size: 200px;
-  opacity: 0.03;
-  animation: backgroundSlide 60s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes backgroundSlide {
-  to { background-position: 1000px 1000px; }
-}
-*/
 
 .location-container {
   max-width: 1400px;
@@ -138,7 +119,6 @@
   z-index: 1;
 }
 
-/* Map container border and glowing effect - GLOW ANIMATION REMOVED */
 .map-container::after {
   content: '';
   position: absolute;
@@ -147,28 +127,6 @@
   border: 2px solid rgba(255, 255, 255, 0.1);
   pointer-events: none;
 }
-
-/*
-.map-container::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(45deg, #7f00ff, transparent, #bb86fc, transparent, #7f00ff);
-  background-size: 400% 400%;
-  z-index: 0;
-  border-radius: 17px;
-  filter: blur(10px);
-  opacity: 0;
-  animation: glowingBorder 8s ease infinite;
-  transition: opacity 0.8s ease;
-  box-shadow: 0 0 30px rgba(127, 0, 255, 0.5);
-}
-
-@keyframes glowingBorder {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-*/
 
 .map-container.visible {
   opacity: 1;

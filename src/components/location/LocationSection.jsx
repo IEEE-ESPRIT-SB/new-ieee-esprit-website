@@ -39,29 +39,34 @@ const LocationSection = () => {
             </svg>
           </div>
           <h2 className="location-title font-playfair" style={{
-            fontSize: 'clamp(2.5rem, 8vw, 4rem)',
-            color: '#b8beea',
-            fontWeight: 700,
-            letterSpacing: '-0.025em',
-            lineHeight: '1.2',
+            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+            color: '#ffffff',
+            fontWeight: 800,
+            letterSpacing: '-0.02em',
+            lineHeight: '1.1',
             textAlign: 'center',
             marginBottom: '0.5rem',
             padding: '0 1rem',
             wordBreak: 'break-word',
             hyphens: 'auto',
-            background: 'none',
-            boxShadow: 'none',
-            border: 'none',
-            textShadow: 'none'
+            background: 'linear-gradient(135deg, #ffffff 0%, #f0f0ff 50%, #ffffff 100%)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
+            filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
           }}>We&apos;re located in ESPRIT, Obviously!</h2>
           <p className="location-subtitle font-playfair" style={{
-            color: '#b8beea',
-            fontSize: '1.2rem',
-            fontWeight: 400,
+            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            color: '#e6e6ff',
+            fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
+            fontWeight: 500,
             textAlign: 'center',
             marginBottom: '2.5em',
-            letterSpacing: '0.04em',
-            textShadow: '0 2px 16px #0a0b30'
+            letterSpacing: '0.06em',
+            textShadow: '0 2px 12px rgba(230, 230, 255, 0.4)',
+            opacity: 0.9
           }}>Check if we&apos;re neighbours!</p>
         </div>
         
