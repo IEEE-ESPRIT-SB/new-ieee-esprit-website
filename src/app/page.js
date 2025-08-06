@@ -4,6 +4,7 @@ import Typewriter from 'typewriter-effect';
 import { AnimatePresence, motion } from 'framer-motion';
 import Preloader from '../components/Preloader';
 import Navbar from '../components/navbar/Navbar';
+import Testimonials from '../components/testimonials/Testimonials';
 import Link from 'next/link';
 import NightSkyBackground from '../components/background/NightSkyBackground';
 import { Sparkles, ArrowRight } from 'lucide-react';
@@ -88,7 +89,7 @@ export default function Home() {
             }}
             as="h1"
           >
-            <span style={{ display: 'inline-block' }}>We Are</span>{' '}
+            <span style={{ display: 'inline-block' }}>Welcome To</span>{' '}
             <span style={{
               display: 'inline-block',
               marginLeft: '10px',
@@ -102,7 +103,7 @@ export default function Home() {
             }}>
               <Typewriter
                 options={{
-                  strings: ['IEEE', 'Engineers', 'Innovators'],
+                  strings: ['IEEE'],
                   autoStart: true,
                   loop: true,
                   delay: 50,
@@ -129,7 +130,7 @@ export default function Home() {
               letterSpacing: '0.01em'
             }}
           >
-            We are IEEE Student Branch at ESPRIT, passionate about advancing technology and fostering innovation through impactful initiatives and professional development.
+            IEEE Esprit Student Branch is the largest SB in Tunisia Section as well as Region 8. Founded in 2017, IEEE ESPRIT Student Branch made its way to being ranked as the largest Student Branch in Tunisia Section as well as the Region 8. It includes 7 technical chapters (AESS, CIS, CS, IAS, IES, PES, MTTS, RAS) alongside two groups (SIGHT and WIE).
           </motion.p>
 
           <motion.div
@@ -178,6 +179,8 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
+        {/* Testimonials Section */}
+        <Testimonials />
         
         
       </main>

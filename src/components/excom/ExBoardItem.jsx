@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import styles from './ExBoardItem.module.scss';
@@ -7,11 +8,17 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 const ExBoardItem = ({ name, role, img, fb, insta, linkedin }) => {
   const imagePath = `/assets/ExCom/${img}`;
   const [showPopup, setShowPopup] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const timeoutRef = useRef(null);
   const avatarButtonRef = useRef(null);
   const closeBtnRef = useRef(null);
   const modalRef = useRef(null);
   const [ariaMessage, setAriaMessage] = useState('');
+
+  // Handle mounting for SSR compatibility
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleImageClick = useCallback((e) => {
     e.stopPropagation();
@@ -75,42 +82,45 @@ const ExBoardItem = ({ name, role, img, fb, insta, linkedin }) => {
   const avatarSize = 132;
   const popupSize = 400;
 
+  // Create portal content
+  const popupContent = showPopup && mounted ? (
+    <div
+      className={styles.popupOverlay}
+      style={{ zIndex: 2147483647 }}
+      onClick={handleClose}
+      aria-modal="true"
+      role="dialog"
+      aria-label={`Agrandissement de la photo de ${name}`}
+      ref={modalRef}
+    >
+      <div className={styles.popupContent} onClick={e => e.stopPropagation()}>
+        <Image
+          src={imagePath}
+          alt={name}
+          className={styles.popupImage}
+          width={popupSize}
+          height={popupSize}
+          style={{ objectFit: 'cover' }}
+          loading="eager"
+          priority
+        />
+        <button
+          className={styles.closeBtn}
+          onClick={handleClose}
+          ref={closeBtnRef}
+          autoFocus
+          aria-label="Fermer l'agrandissement"
+        >
+          Fermer
+        </button>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <>
       <div aria-live="polite" style={{position: 'absolute', left: '-9999px', height: 0, width: 0, overflow: 'hidden'}}>{ariaMessage}</div>
-      {showPopup && (
-        <div
-          className={styles.popupOverlay}
-          style={{ zIndex: 99999 }}
-          onClick={handleClose}
-          aria-modal="true"
-          role="dialog"
-          aria-label={`Agrandissement de la photo de ${name}`}
-          ref={modalRef}
-        >
-          <div className={styles.popupContent} onClick={e => e.stopPropagation()}>
-            <Image
-              src={imagePath}
-              alt={name}
-              className={styles.popupImage}
-              width={popupSize}
-              height={popupSize}
-              style={{ objectFit: 'cover' }}
-              loading="eager"
-              priority
-            />
-            <button
-              className={styles.closeBtn}
-              onClick={handleClose}
-              ref={closeBtnRef}
-              autoFocus
-              aria-label="Fermer l'agrandissement"
-            >
-              Fermer
-            </button>
-          </div>
-        </div>
-      )}
+      {mounted && popupContent && createPortal(popupContent, document.body)}
       <div className={styles.card}>
         <div
           className={`${styles.avatarWrapper} ${styles.clickableAvatar}`}

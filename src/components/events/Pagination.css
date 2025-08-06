@@ -1,69 +1,135 @@
 .pagination-nav {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   margin: 2.5rem 0 0.5rem 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0.5rem 0 0.5rem 0;
+  scrollbar-width: thin;
+  background: none;
 }
+
 .pagination {
   display: flex;
-  gap: 0.65rem;
-  list-style: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
+  gap: 0.4rem;
+  width: auto;
+  background: none;
+  list-style: none;
+  padding: 0.3rem 0;
 }
+
 .pagination-page, .pagination-previous, .pagination-next {
-  cursor: pointer;
-  padding: 0.6rem 1.15rem;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #4256b7 60%, #a18cd1 100%);
-  color: #fff;
-  margin: 0 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  padding: 0.5rem 1.1rem;
+  border-radius: 14px;
+  min-width: 44px;
+  min-height: 44px;
+  background: rgba(255,255,255,0.10);
+  color: #ffffff;
   border: none;
-  font-weight: 600;
-  font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: var(--text-base, 1.05rem);
-  box-shadow: none;
-  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 
+    0 2px 12px 0 rgba(63,81,181,0.10), 
+    0 1.5px 0.5px 0 rgba(255,255,255,0.08) inset;
   outline: none;
+  user-select: none;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-weight: 600;
+  margin: 0;
+  position: relative;
+  backdrop-filter: blur(6px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .pagination-page:hover, .pagination-previous:hover, .pagination-next:hover {
-  background: linear-gradient(135deg, #5c6bc0 60%, #b39ddb 100%);
-  color: #fff;
+  background: linear-gradient(135deg, rgba(63,81,181,0.25), rgba(156,39,176,0.20));
+  color: #ffffff;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 
+    0 6px 20px 0 rgba(63,81,181,0.18),
+    0 3px 10px 0 rgba(156,39,176,0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
-.pagination-active .pagination-indicator-btn {
-  background: linear-gradient(135deg, #5c6bc0 60%, #b39ddb 100%);
-  color: #fff;
+
+.pagination-current {
+  background: linear-gradient(135deg, #3f51b5 60%, #9c27b0 100%) !important;
+  color: #ffffff !important;
   font-weight: 700;
-  border: none;
-  box-shadow: none;
-  position: relative;
+  min-width: 54px;
+  min-height: 48px;
+  font-size: clamp(1.08rem, 3vw, 1.22rem);
+  box-shadow: 
+    0 4px 18px 0 rgba(156,39,176,0.20),
+    0 2px 8px 0 rgba(63,81,181,0.15);
   z-index: 2;
+  border: 2px solid rgba(255,255,255,0.25) !important;
+  backdrop-filter: blur(10px) saturate(1.3);
 }
 .pagination-disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   pointer-events: none;
-  background: #23244a;
-  color: #b8beea;
-  border: none;
+  background: rgba(35, 36, 74, 0.6) !important;
+  color: rgba(184, 190, 234, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  filter: grayscale(0.3);
+  cursor: not-allowed;
 }
+
 .pagination-break {
-  color: #b8beea;
+  color: rgba(184, 190, 234, 0.7);
   background: transparent;
   border: none;
-  font-size: var(--text-lg, 1.1rem);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   padding: 0 0.5rem;
+  cursor: default;
+  box-shadow: none;
+  min-width: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 @media (max-width: 600px) {
   .pagination-nav {
     flex-wrap: wrap;
     gap: 0.3rem;
     justify-content: center;
+    margin: 2rem 0 0.5rem 0;
+    padding: 0.4rem 0;
   }
+  
+  .pagination {
+    gap: 0.25rem;
+    padding: 0.2rem 0;
+  }
+  
   .pagination-page, .pagination-previous, .pagination-next {
-    padding: 0.45rem 0.7rem;
-    font-size: var(--text-sm, 0.98rem);
+    padding: 0.4rem 0.8rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
     border-radius: 12px;
-    min-width: 38px;
-    min-height: 38px;
+    min-width: 40px;
+    min-height: 40px;
   }
+  
+  .pagination-current {
+    min-width: 48px;
+    min-height: 44px;
+    font-size: clamp(1rem, 2.8vw, 1.1rem);
+    padding: 0.35rem 0.9rem;
+    border-radius: 12px;
+  }
+  
   .pagination-label {
     display: none;
   }
@@ -71,26 +137,71 @@
 
 @media (max-width: 400px) {
   .pagination-nav {
-    flex-direction: column;
-    align-items: stretch;
     gap: 0.2rem;
+    margin: 1.5rem 0 0.5rem 0;
+    padding: 0.3rem 0;
   }
+  
+  .pagination {
+    gap: 0.2rem;
+    padding: 0.15rem 0;
+  }
+  
   .pagination-page, .pagination-previous, .pagination-next {
-    padding: 0.22rem 0.35rem;
-    font-size: 0.85rem;
-    border-radius: 8px;
-    min-width: 24px;
-    min-height: 28px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    min-width: 36px;
+    min-height: 36px;
     margin: 0 1px;
   }
+  
   .pagination-current {
-    padding: 0.22rem 0.5rem !important;
-    font-size: 0.9rem !important;
-    min-width: 24px !important;
-    border-radius: 8px !important;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.95rem;
+    min-width: 42px;
+    min-height: 40px;
+    border-radius: 10px;
   }
+  
   .pagination-break {
     font-size: 0.9rem;
-    padding: 0 0.2rem;
+    padding: 0 0.3rem;
+  }
+}
+
+/* Ajout d'animations fluides */
+.pagination-page, .pagination-previous, .pagination-next, .pagination-current {
+  position: relative;
+  overflow: hidden;
+}
+
+.pagination-page::before, .pagination-previous::before, .pagination-next::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;
+}
+
+.pagination-page:hover::before, .pagination-previous:hover::before, .pagination-next:hover::before {
+  left: 100%;
+}
+
+/* Focus states pour l'accessibilité */
+.pagination-page:focus-visible, .pagination-previous:focus-visible, .pagination-next:focus-visible {
+  outline: 2px solid #3f51b5;
+  outline-offset: 2px;
+}
+
+/* Style pour les écrans tactiles */
+@media (pointer: coarse) {
+  .pagination-page, .pagination-previous, .pagination-next, .pagination-current {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1.05rem;
   }
 }

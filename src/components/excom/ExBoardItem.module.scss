@@ -269,16 +269,22 @@
 }
 
 .popupOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
   background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2147483647 !important; /* Maximum possible z-index value */
+  cursor: pointer;
+  animation: fadeIn 0.3s ease-out;
+  /* Ensure it's rendered above everything */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .popupContent {
@@ -287,29 +293,45 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: default;
+  animation: scaleIn 0.3s ease-out;
 }
 
 .popupImage {
   max-width: 90vw;
   max-height: 80vh;
   border-radius: 16px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+  box-shadow: 
+    0 25px 80px rgba(30, 28, 124, 0.6),
+    0 12px 48px rgba(94, 94, 230, 0.45),
+    0 6px 24px rgba(184, 190, 234, 0.35);
   background: #fff;
+  transition: transform 0.3s ease;
 }
 
 .closeBtn {
   margin-top: 20px;
-  padding: 8px 24px;
-  background: #222;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, rgba(30, 28, 124, 0.9), rgba(44, 26, 90, 0.9));
   color: #fff;
-  border: none;
-  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 .closeBtn:hover {
-  background: #444;
+  background: linear-gradient(135deg, rgba(94, 94, 230, 0.9), rgba(184, 190, 234, 0.9));
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(94, 94, 230, 0.4);
+}
+.closeBtn:focus {
+  outline: 2px solid rgba(94, 94, 230, 0.6);
+  outline-offset: 2px;
 }
 
 @media (max-width: 900px) {
@@ -441,6 +463,27 @@
   }
   40%, 100% {
     background-position: 300px;
+  }
+}
+
+/* Animations pour la popup modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

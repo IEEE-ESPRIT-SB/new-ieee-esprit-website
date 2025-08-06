@@ -221,19 +221,12 @@ export default function UnitsPage() {
         {coloredCircles.map(circle => (
           <div
             key={circle.id}
+            className="colored-circle"
             style={{
               left: `${circle.x}%`,
               top: `${circle.y}%`,
-              width: '0',
-              height: '0',
-              backgroundColor: 'transparent',
-              borderRadius: '50%',
-              position: 'absolute',
               boxShadow: `0 0 ${circle.size/2}px ${circle.size/2}px ${circle.color}`,
-              opacity: circle.opacity * 0.7,
-              filter: 'blur(40px)',
-              zIndex: 1,
-              transform: 'translate(-50%, -50%)'
+              opacity: circle.opacity * 0.7
             }}
           />
         ))}
@@ -274,12 +267,7 @@ export default function UnitsPage() {
       </div>
 
       {/* Main Content */}
-      <main className="content-container" style={{ 
-        opacity: loadingComplete ? 1 : 0, 
-        transition: 'opacity 0.8s ease-in-out 0.3s',
-        maxWidth: '100%',
-        padding: '0 1rem'
-      }}>
+      <main className={`content-container ${loadingComplete ? 'loaded' : ''}`}>
         <Navbar active="units" />
 
         {/* Hero Section */}
@@ -288,12 +276,6 @@ export default function UnitsPage() {
           animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 50 }}
           transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
           className="hero-section"
-          style={{ 
-            textAlign: 'center', 
-            marginBottom: '4rem',
-            marginTop: '6rem',
-            padding: '0 1rem'
-          }}
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -312,25 +294,6 @@ export default function UnitsPage() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
             className="hero-title text-display"
-            style={{
-              fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-              fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
-              color: '#ffffff',
-              fontWeight: 800,
-              letterSpacing: '-0.02em',
-              lineHeight: '1.1',
-              textAlign: 'center',
-              marginBottom: '1rem',
-              padding: '0 1rem',
-              wordBreak: 'break-word',
-              hyphens: 'auto',
-              background: 'linear-gradient(135deg, #ffffff 0%, #e6e6ff 50%, #ffffff 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
-              filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
-            }}
           >
             Our Units
           </motion.h1>
@@ -340,16 +303,6 @@ export default function UnitsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.1 }}
             className="hero-subtitle text-body-large"
-            style={{
-              maxWidth: '800px',
-              margin: '0 auto 1rem auto',
-              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-              lineHeight: '1.6',
-              fontWeight: 400,
-              color: 'var(--text-secondary)',
-              textAlign: 'center',
-              letterSpacing: '0.01em'
-            }}
           >
             Explore our various IEEE Technical Societies, each dedicated to a specialized area of ​​engineering and technology.
           </motion.p>
@@ -359,22 +312,13 @@ export default function UnitsPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 1.3 }}
             className="stats-container"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '2rem',
-              flexWrap: 'wrap',
-              marginBottom: '2rem'
-            }}
           >
             <div className="stat-item">
               <div className="stat-number">{units.length}</div>
               <div className="stat-label">Units</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">
-                {units.reduce((sum, [, unit]) => sum + unit.numberOfMembers, 0)}
-              </div>
+              <div className="stat-number">1200</div>
               <div className="stat-label">Members</div>
             </div>
             <div className="stat-item">
@@ -392,76 +336,38 @@ export default function UnitsPage() {
           initial="hidden"
           animate={loadingComplete ? "visible" : "hidden"}
           className="units-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
-            gap: '2rem',
-            padding: '0 1rem',
-            marginBottom: '4rem'
-          }}
         >
           {units.map(([key, unit]) => (
             <motion.div
               key={key}
               id={`unit-${key}`}
               variants={cardVariants}
-              className="unit-card"
+              className={`unit-card ${hoveredCard === key ? 'hovered' : ''}`}
               onMouseEnter={() => setHoveredCard(key)}
               onMouseLeave={() => setHoveredCard(null)}
               style={{
-                background: `linear-gradient(135deg, 
-                  rgba(255, 255, 255, 0.12) 0%, 
-                  rgba(255, 255, 255, 0.06) 50%,
-                  rgba(255, 255, 255, 0.03) 100%)`,
-                backdropFilter: 'blur(20px)',
-                border: `1px solid ${hoveredCard === key ? unit.color + '40' : 'rgba(255, 255, 255, 0.15)'}`,
-                borderRadius: '24px',
-                padding: '2rem',
-                position: 'relative',
-                overflow: 'hidden',
-                cursor: 'pointer',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                transform: hoveredCard === key ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+                borderColor: hoveredCard === key ? unit.color + '40' : 'rgba(255, 255, 255, 0.15)',
                 boxShadow: hoveredCard === key 
                   ? `0 25px 50px ${unit.color}25, 0 0 0 1px ${unit.color}20, inset 0 1px 0 rgba(255, 255, 255, 0.1)`
-                  : '0 8px 32px rgba(0, 0, 0, 0.12)',
-                minHeight: '420px',
-                display: 'flex',
-                flexDirection: 'column'
+                  : '0 8px 32px rgba(0, 0, 0, 0.12)'
               }}
             >
               {/* Animated background gradient */}
               <motion.div
                 className="card-bg-gradient"
                 style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: `radial-gradient(circle at 50% 0%, ${unit.color}15 0%, transparent 70%)`,
-                  opacity: hoveredCard === key ? 1 : 0,
-                  transition: 'opacity 0.4s ease'
+                  background: `radial-gradient(circle at 50% 0%, ${unit.color}15 0%, transparent 70%)`
                 }}
               />
 
               {/* Card Header */}
-              <div className="card-header" style={{ position: 'relative', zIndex: 2, marginBottom: '1.5rem' }}>
+              <div className="card-header">
                 <motion.div
                   variants={iconVariants}
                   className="unit-icon"
                   style={{
-                    width: '64px',
-                    height: '64px',
-                    borderRadius: '16px',
                     background: `linear-gradient(135deg, ${unit.color}20, ${unit.color}10)`,
-                    border: `2px solid ${unit.color}30`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '1rem',
-                    position: 'relative',
-                    overflow: 'hidden'
+                    border: `2px solid ${unit.color}30`
                   }}
                 >
                   <motion.div
@@ -478,97 +384,51 @@ export default function UnitsPage() {
                   <motion.div
                     className="shine-effect"
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: '-100%',
-                      width: '100%',
-                      height: '100%',
-                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-                      transform: hoveredCard === key ? 'translateX(200%)' : 'translateX(-100%)',
-                      transition: 'transform 0.6s ease'
+                      transform: hoveredCard === key ? 'translateX(200%)' : 'translateX(-100%)'
                     }}
                   />
                 </motion.div>
 
                 <div>
-                  <h3 className="unit-name" style={{
-                    fontSize: '1.5rem',
-                    fontWeight: '700',
-                    color: '#ffffff',
-                    marginBottom: '0.5rem',
-                    fontFamily: 'var(--font-display, "Playfair Display", serif)'
-                  }}>
+                  <h3 className="unit-name">
                     {unit.name}
                   </h3>
-                  <p className="unit-subname" style={{
-                    fontSize: '0.95rem',
-                    color: unit.color,
-                    fontWeight: '500',
-                    lineHeight: '1.4'
-                  }}>
+                  <p className="unit-subname" style={{ color: unit.color }}>
                     {unit.subName}
                   </p>
                 </div>
               </div>
 
               {/* Card Content */}
-              <div className="card-content" style={{ flex: 1, position: 'relative', zIndex: 2 }}>
-                <p className="unit-description" style={{
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  lineHeight: '1.6',
-                  fontSize: '0.95rem',
-                  marginBottom: '1.5rem'
-                }}>
+              <div className="card-content">
+                <p className="unit-description">
                   {unit.description.length > 150 
                     ? unit.description.substring(0, 150) + '...' 
                     : unit.description}
                 </p>
 
                 {/* Stats */}
-                <div className="unit-stats" style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '1rem',
-                  marginBottom: '1.5rem'
-                }}>
-                  <div className="stat" style={{ textAlign: 'center' }}>
-                    <Users size={16} style={{ color: unit.color, marginBottom: '0.25rem' }} />
-                    <div style={{ fontSize: '1.1rem', fontWeight: '600', color: '#fff' }}>
-                      {unit.numberOfMembers}
-                    </div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>
-                      Members
-                    </div>
+                <div className="unit-stats">
+                  <div className="stat">
+                    <Users size={16} style={{ color: unit.color }} />
+                    <div>{unit.numberOfMembers}</div>
+                    <div>Members</div>
                   </div>
-                  <div className="stat" style={{ textAlign: 'center' }}>
-                    <Target size={16} style={{ color: unit.color, marginBottom: '0.25rem' }} />
-                    <div style={{ fontSize: '1.1rem', fontWeight: '600', color: '#fff' }}>
-                      {unit.numberOfActivities}
-                    </div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>
-                      Activity
-                    </div>
+                  <div className="stat">
+                    <Target size={16} style={{ color: unit.color }} />
+                    <div>{unit.numberOfActivities}</div>
+                    <div>Activity</div>
                   </div>
-                  <div className="stat" style={{ textAlign: 'center' }}>
-                    <Calendar size={16} style={{ color: unit.color, marginBottom: '0.25rem' }} />
-                    <div style={{ fontSize: '1.1rem', fontWeight: '600', color: '#fff' }}>
-                      {unit.foundation}
-                    </div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>
-                      founded
-                    </div>
+                  <div className="stat">
+                    <Calendar size={16} style={{ color: unit.color }} />
+                    <div>{unit.foundation}</div>
+                    <div>founded</div>
                   </div>
                 </div>
               </div>
 
               {/* Card Footer */}
-              <div className="card-footer" style={{ 
-                position: 'relative', 
-                zIndex: 2,
-                display: 'flex',
-                gap: '0.75rem',
-                marginTop: 'auto'
-              }}>
+              <div className="card-footer">
                 <motion.a
                   href={unit.website}
                   target="_blank"
@@ -577,20 +437,7 @@ export default function UnitsPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   style={{
-                    flex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                    padding: '0.75rem 1rem',
-                    background: `linear-gradient(135deg, ${unit.color}, ${unit.color}dd)`,
-                    color: '#ffffff',
-                    borderRadius: '12px',
-                    textDecoration: 'none',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    transition: 'all 0.3s ease',
-                    border: 'none'
+                    background: `linear-gradient(135deg, ${unit.color}, ${unit.color}dd)`
                   }}
                 >
                   <Globe size={16} />
@@ -605,20 +452,7 @@ export default function UnitsPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   style={{
-                    flex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                    padding: '0.75rem 1rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff',
-                    border: `1px solid ${unit.color}40`,
-                    borderRadius: '12px',
-                    textDecoration: 'none',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    transition: 'all 0.3s ease'
+                    border: `1px solid ${unit.color}40`
                   }}
                 >
                   <ExternalLink size={16} />
@@ -630,16 +464,7 @@ export default function UnitsPage() {
               <motion.div
                 className="hover-overlay"
                 style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: `linear-gradient(135deg, ${unit.color}08, transparent)`,
-                  opacity: hoveredCard === key ? 1 : 0,
-                  transition: 'opacity 0.3s ease',
-                  pointerEvents: 'none',
-                  borderRadius: '24px'
+                  background: `linear-gradient(135deg, ${unit.color}08, transparent)`
                 }}
               />
             </motion.div>
@@ -652,60 +477,19 @@ export default function UnitsPage() {
           animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 50 }}
           transition={{ duration: 1, delay: 1.5 }}
           className="cta-section"
-          style={{
-            textAlign: 'center',
-            padding: '4rem 1rem',
-            marginBottom: '2rem'
-          }}
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.7 }}
-            style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '24px',
-              padding: '3rem 2rem',
-              maxWidth: '600px',
-              margin: '0 auto'
-            }}
+            className="cta-container"
           >
-            <h2 style={{
-              fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-              fontWeight: '700',
-              color: '#ffffff',
-              marginBottom: '1rem',
-              fontFamily: 'var(--font-display, "Playfair Display", serif)'
-            }}>
-              Join us! 
-            </h2>
-            <p style={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              fontSize: '1.1rem',
-              lineHeight: '1.6',
-              marginBottom: '2rem'
-            }}>
-             Discover your passion and develop your skills within our IEEE units.
-            </p>
+            <h2>Join us!</h2>
+            <p>Discover your passion and develop your skills within our IEEE units.</p>
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(99, 102, 241, 0.3)' }}
               whileTap={{ scale: 0.95 }}
-              style={{
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '16px',
-                padding: '1rem 2rem',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                transition: 'all 0.3s ease'
-              }}
+              className="cta-button"
             >
               learn more
               <ArrowRight size={20} />

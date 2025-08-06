@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Ahmed Ben Salem",
+    "role": "Former Chair 2022-2023",
+    "photo": "adam.jpeg",
+    "quote": "Leading IEEE ESPRIT SB was an incredible journey that shaped my leadership skills and connected me with amazing people. The experience taught me the value of teamwork and innovation in engineering.",
+    "year": "2023"
+  },
+  {
+    "id": 2,
+    "name": "Yasmine Trabelsi",
+    "role": "Former Vice Chair 2021-2022",
+    "photo": "adam.jpeg",
+    "quote": "Being part of IEEE ESPRIT gave me opportunities I never imagined. From organizing international conferences to mentoring students, every moment was a learning experience.",
+    "year": "2022"
+  },
+  {
+    "id": 3,
+    "name": "Mohamed Fares",
+    "role": "Former Chair 2021-2022",
+    "photo": "mehdi.jpeg",
+    "quote": "IEEE ESPRIT SB is more than just a student organization—it's a family. The skills I developed here directly contributed to my success in the tech industry.",
+    "year": "2022"
+  },
+  {
+    "id": 4,
+    "name": "Imen Hajji",
+    "role": "Former Secretary 2020-2021",
+    "photo": "yosr.jpeg",
+    "quote": "The professional network I built through IEEE has been invaluable. The experience opened doors to internships and career opportunities I couldn't have accessed otherwise.",
+    "year": "2021"
+  },
+  {
+    "id": 5,
+    "name": "Karim Essid",
+    "role": "Former Treasurer 2019-2020",
+    "photo": "adam.jpeg",
+    "quote": "Managing the financial aspects of IEEE ESPRIT taught me responsibility and strategic thinking. These skills have been crucial in my current role as a project manager.",
+    "year": "2020"
+  },
+  {
+    "id": 6,
+    "name": "Salma Bouaziz",
+    "role": "Former WIE Chair 2020-2021",
+    "photo": "adam.jpeg",
+    "quote": "Leading the Women in Engineering group was empowering. We created initiatives that inspired many female students to pursue engineering careers with confidence.",
+    "year": "2021"
+  }
+]
