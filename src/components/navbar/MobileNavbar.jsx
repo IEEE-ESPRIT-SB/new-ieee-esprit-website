@@ -1,146 +1,46 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { X } from 'lucide-react';
+import Image from 'next/image';
 
-const MobileNavbar = ({ isMobileMenuOpen, setIsMobileMenuOpen, active = "" }) => {
-  
-  // Prevent body scroll when mobile nav is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.classList.add('mobile-nav-open');
-    } else {
-      document.body.classList.remove('mobile-nav-open');
-    }
+/*
+  Refonte mobile: barre de navigation inférieure persistante (bottom nav)
+  - Plus ergonomique (reachable thumb zone)
+  - Adaptée portrait & paysage via CSS (icônes seuls en paysage)
+  - Utilise le logo IEEE
+  Les props isMobileMenuOpen / setIsMobileMenuOpen sont conservées pour compat mais plus utilisées.
+*/
 
-    // Cleanup function to remove class when component unmounts
-    return () => {
-      document.body.classList.remove('mobile-nav-open');
-    };
-  }, [isMobileMenuOpen]);
-
-  const handleLinkClick = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Escape') {
-      setIsMobileMenuOpen(false);
-    }
-  };
+const MobileNavbar = ({ active = "" }) => {
+  const items = [
+    { href: '/', key: 'home', label: 'Home', icon: 'fa-home' },
+    { href: '/about_us', key: 'about', label: 'About', icon: 'fa-users' },
+    { href: '/events', key: 'events', label: 'Events', icon: 'fa-calendar-alt' },
+    { href: '/units', key: 'units', label: 'Units', icon: 'fa-sitemap' },
+  ];
 
   return (
-    <>
-      {/* Burger Menu Button */}
-      <button 
-        className={`burger-menu ${isMobileMenuOpen ? 'active' : ''}`}
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-        aria-expanded={isMobileMenuOpen}
-        aria-controls="mobile-navigation"
-      >
-        <span className="burger-line" aria-hidden="true"></span>
-        <span className="burger-line" aria-hidden="true"></span>
-        <span className="burger-line" aria-hidden="true"></span>
-      </button>
-
-      {/* Mobile Navigation Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className={`mobile-nav-overlay ${isMobileMenuOpen ? 'active' : ''}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Mobile Navigation Menu */}      
-      <nav 
-        className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}
-        id="mobile-navigation"
-        role="navigation"
-        aria-label="Mobile navigation"
-        onKeyDown={handleKeyDown}
-      >
-        <div className="mobile-nav-content">
-          {/* Mobile Navigation Header */}
-          <div className="mobile-nav-header">
-            <div className="mobile-nav-logo">
-              IEEE ESPRIT
-            </div>
-            <button
-              className="mobile-nav-close"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Close navigation menu"
-            >
-              <X size={18} />
-            </button>
-          </div>
-
-          {/* Main Navigation Content - Centered */}
-          <div className="mobile-nav-main">
-            <ul className="mobile-nav-links" role="list">
-              <li role="listitem">
-                <Link 
-                  href="/" 
-                  className={active === "home" ? "active" : ""}
-                  onClick={handleLinkClick}
-                  aria-current={active === "home" ? "page" : undefined}
-                >
-                  <i className="fas fa-home" aria-hidden="true"></i>
-                  <span>Home</span>
-                </Link>
-              </li>
-              <li role="listitem">
-                <Link 
-                  href="/about_us" 
-                  className={active === "about" ? "active" : ""}
-                  onClick={handleLinkClick}
-                  aria-current={active === "about" ? "page" : undefined}
-                >
-                  <i className="fas fa-users" aria-hidden="true"></i>
-                  <span>About Us</span>
-                </Link>
-              </li>
-              <li role="listitem">
-                <Link 
-                  href="/events" 
-                  className={active === "events" ? "active" : ""}
-                  onClick={handleLinkClick}
-                  aria-current={active === "events" ? "page" : undefined}
-                >
-                  <i className="fas fa-calendar-alt" aria-hidden="true"></i>
-                  <span>Events</span>
-                </Link>
-              </li>
-              <li role="listitem">
-                <Link 
-                  href="/units" 
-                  className={active === "units" ? "active" : ""}
-                  onClick={handleLinkClick}
-                  aria-current={active === "units" ? "page" : undefined}
-                >
-                  <i className="fas fa-sitemap" aria-hidden="true"></i>
-                  <span>Units</span>
-                </Link>
-              </li>
-            </ul>
-
-            {/* Mobile Register Button */}
-            <div className="mobile-register-container">
-              <Link 
-                href="#" 
-                className="mobile-register-btn"
-                onClick={handleLinkClick}
-                role="button"
-                aria-label="Register for IEEE ESPRIT membership"
-              >
-                <i className="fas fa-user-plus" aria-hidden="true"></i>
-                <span>Register now</span>
-              </Link>
-            </div>
-          </div>
+    <div className="mobile-bottom-nav-wrapper" role="none">
+      <nav className="mobile-bottom-nav" aria-label="Navigation principale mobile">
+        <div className="bottom-nav-logo" aria-hidden="true">
+          <Image src="/images/ieee-logo-removebg-preview.png" alt="IEEE Logo" width={60} height={30} priority />
         </div>
+        <ul className="bottom-nav-items" role="list">
+          {items.map(item => (
+            <li key={item.key} role="listitem" className={active === item.key ? 'active' : ''}>
+              <Link href={item.href} aria-current={active === item.key ? 'page' : undefined}>
+                <i className={`fas ${item.icon}`} aria-hidden="true" />
+                <span className="label">{item.label}</span>
+                <span className="active-indicator" aria-hidden="true" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {/* Floating Register (FAB) */}
+        <Link href="#" className="mobile-fab" aria-label="Register now">
+          <i className="fas fa-user-plus" aria-hidden="true" />
+        </Link>
       </nav>
-    </>
+    </div>
   );
 };
 
