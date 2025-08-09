@@ -55,7 +55,7 @@ export default function Navbar({ active = "" }) {
       />
 
       {/* Desktop Register Button */}
-      <a href="*" className="register-btn desktop-register">
+      <a href="#" className="register-btn desktop-register">
         <i className="fas fa-user-plus"></i>
         Register now
       </a>
