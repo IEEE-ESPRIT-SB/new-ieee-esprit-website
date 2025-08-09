@@ -235,7 +235,7 @@ body.mobile-nav-open {
   right: 0;
   padding: 20px 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(7, 8, 37, 0.9);
@@ -245,36 +245,11 @@ body.mobile-nav-open {
 }
 
 .mobile-nav-logo {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  letter-spacing: 1px;
-  background: linear-gradient(135deg, #ffffff 0%, #f0f0ff 50%, #ffffff 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.mobile-nav-close {
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.mobile-nav-close:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #ffffff;
-  transform: scale(1.05);
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
 /* Centered Navigation Content */

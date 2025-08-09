@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { X } from 'lucide-react';
+import Image from 'next/image';
 
 const MobileNavbar = ({ isMobileMenuOpen, setIsMobileMenuOpen, active = "" }) => {
   
@@ -64,15 +64,15 @@ const MobileNavbar = ({ isMobileMenuOpen, setIsMobileMenuOpen, active = "" }) =>
           {/* Mobile Navigation Header */}
           <div className="mobile-nav-header">
             <div className="mobile-nav-logo">
-              IEEE ESPRIT
+              <Image 
+                src="/images/ieee-logo-removebg-preview.png" 
+                alt="IEEE ESPRIT Logo" 
+                width={120} 
+                height={60} 
+                style={{ height: 'auto', width: 'auto', maxHeight: '40px' }}
+                priority
+              />
             </div>
-            <button
-              className="mobile-nav-close"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Close navigation menu"
-            >
-              <X size={18} />
-            </button>
           </div>
 
           {/* Main Navigation Content - Centered */}
