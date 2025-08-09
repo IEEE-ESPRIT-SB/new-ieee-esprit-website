@@ -16,6 +16,7 @@ import 'swiper/css/effect-coverflow';
 import './Testimonials.scss';
 
 const Testimonials = () => {
+  // Track the logical index (ignores duplicated loop slides)
   const [activeIndex, setActiveIndex] = useState(0);
   const [testimonials, setTestimonials] = useState([]);
   const [swiperInstance, setSwiperInstance] = useState(null);
@@ -45,12 +46,17 @@ const Testimonials = () => {
     }
   };
 
+  // Use realIndex so pagination / highlighting stays in sync when loop=true
   const handleSlideChange = (swiper) => {
-    setActiveIndex(swiper.activeIndex);
+    setActiveIndex(swiper.realIndex ?? swiper.activeIndex);
   };
 
   const goToSlide = (index) => {
-    if (swiperInstance) {
+    if (!swiperInstance) return;
+    // If loop enabled, use slideToLoop (Swiper >= 8+) to jump to the correct duplicated slide
+    if (swiperInstance.params?.loop && typeof swiperInstance.slideToLoop === 'function') {
+      swiperInstance.slideToLoop(index);
+    } else {
       swiperInstance.slideTo(index);
     }
   };
