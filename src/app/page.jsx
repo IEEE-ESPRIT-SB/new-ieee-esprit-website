@@ -179,8 +179,7 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
-        {/* Testimonials Section */}
-        <Testimonials />
+    
         
         
       </main>

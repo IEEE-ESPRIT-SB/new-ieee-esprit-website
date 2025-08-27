@@ -8,8 +8,9 @@ import NightSkyBackground from '../../components/background/NightSkyBackground';
 import ExBoardItem from '../../components/excom/ExBoardItem';
 import AwardsCarousel from '../../components/awards/AwardsCarousel';
 import LocationSection from '../../components/location/LocationSection';
-import StatisticsSection from '../../components/StatisticsSection';
+import StatisticsSection from '../../components/stats/StatisticsSection';
 import exboard from '../../assets/exboard.json';
+import './about.css';
 
 export default function AboutUs() {
   const [preloading, setPreloading] = useState(true);
@@ -50,7 +51,13 @@ export default function AboutUs() {
     }
   }, []);
 
-return (
+  const getGridClass = () => {
+    if (windowWidth <= 600) return 'mobile';
+    if (windowWidth <= 900) return 'tablet';
+    return 'desktop';
+  };
+
+  return (
     <>
       <Head>
         <title>About Us | IEEE ESPRIT SB</title>
@@ -88,62 +95,14 @@ return (
       
       <NightSkyBackground />
 
-      <main className="content-container" style={{ opacity: loadingComplete ? 1 : 0, transition: 'opacity 0.5s ease-in-out 0.3s' }}>
+      <main className={`content-container about-main ${loadingComplete ? 'loaded' : ''}`}>
         <Navbar active="about" />
         
         {/* Meet the Team Section */}
-        <section style={{
-          padding: '2rem 0 3rem 0',
-          position: 'relative',
-          zIndex: 3
-        }}>
-          <h1 className="text-display" style={{
-            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-            fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
-            color: '#ffffff',
-            fontWeight: 800,
-            letterSpacing: '-0.02em',
-            lineHeight: '1.1',
-            textAlign: 'center',
-            marginBottom: '1rem',
-            padding: '0 1rem',
-            wordBreak: 'break-word',
-            hyphens: 'auto',
-            background: 'linear-gradient(135deg, #ffffff 0%, #e6e6ff 50%, #ffffff 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
-            filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
-          }}>Our Executive Committee</h1>
-          <h2 style={{
-            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-            color: '#e6e6ff',
-            fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-            fontWeight: 500,
-            textAlign: 'center',
-            marginBottom: '2.5em',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            textShadow: '0 2px 12px rgba(230, 230, 255, 0.4)',
-            opacity: 0.9
-          }}>IEEE ESPRIT SB</h2>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns:
-                windowWidth <= 600
-                  ? '1fr'
-                  : windowWidth <= 900
-                  ? 'repeat(2, 1fr)'
-                  : 'repeat(4, 1fr)',
-              gap: '2.5rem 2rem',
-              maxWidth: '1200px',
-              margin: '0 auto',
-              justifyItems: 'center',
-              width: '100%',
-            }}
-          >
+        <section className="about-section">
+          <h1 className="text-display about-title">Our Executive Committee</h1>
+          <h2 className="about-subtitle">IEEE ESPRIT SB</h2>
+          <div className={`team-grid ${getGridClass()}`}>
             {exboard.map((member, idx) => (
               <ExBoardItem
                 key={member.name + idx}
@@ -162,45 +121,10 @@ return (
         <StatisticsSection />
 
         {/* Awards Section */}
-        <section style={{
-          padding: '3rem 0',
-          position: 'relative',
-          zIndex: 3,
-          overflow: 'visible',
-          width: '100%'
-        }}>
+        <section className="awards-section">
           <div className="awards-title-wrapper">
-            <h2 className="text-display" style={{
-              fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-              fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
-              color: '#ffffff',
-              fontWeight: 800,
-              letterSpacing: '-0.02em',
-              lineHeight: '1.1',
-              textAlign: 'center',
-              marginBottom: '1rem',
-              padding: '0 1rem',
-              wordBreak: 'break-word',
-              hyphens: 'auto',
-              background: 'linear-gradient(135deg, #ffffff 0%, #f0f0ff 50%, #ffffff 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
-              filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
-            }}>Our Awards & Recognitions</h2>
-            <h3 className="awards-subtitle" style={{
-              fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-              fontSize: 'clamp(1rem, 2.2vw, 1.3rem)',
-              color: '#e6e6ff',
-              fontWeight: 500,
-              textAlign: 'center',
-              marginBottom: '2rem',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              textShadow: '0 2px 12px rgba(230, 230, 255, 0.4)',
-              opacity: 0.9
-            }}>Excellence in Innovation & Impact</h3>
+            <h2 className="text-display about-title about-title-awards">Our Awards & Recognitions</h2>
+            <h3 className="about-subtitle about-subtitle-awards">Excellence in Innovation & Impact</h3>
           </div>
           <AwardsCarousel />
         </section>

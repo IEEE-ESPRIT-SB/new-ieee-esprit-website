@@ -763,6 +763,14 @@ body {
   -webkit-text-fill-color: transparent;
   text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  /* Prevent unwanted text breaks on mobile */
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  /* Ensure proper text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .text-heading {
@@ -826,6 +834,14 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--leading-tight);
   color: var(--text-primary);
   margin-bottom: 0.75em;
+  /* Prevent unwanted text breaks on mobile */
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  /* Ensure proper text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1 {

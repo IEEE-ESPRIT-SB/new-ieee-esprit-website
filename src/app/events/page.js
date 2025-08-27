@@ -6,7 +6,7 @@ import Preloader from '../../components/Preloader';
 import Navbar from '../../components/navbar/Navbar';
 import NightSkyBackground from '../../components/background/NightSkyBackground';
 import eventsData from '../../assets/events.json';
-import './events.css';
+import './events.scss';
 import Pagination from '../../components/events/Pagination';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -104,79 +104,46 @@ export default function EventsPage() {
       });
     }
     return filtered;
-  }, [events, activeFilter, debouncedSearch]);
+  }, [events, debouncedSearch, activeFilter]);
 
-  // Pagination logic
-  const paginatedEvents = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    return filteredEvents.slice(start, start + pageSize);
-  }, [filteredEvents, currentPage, pageSize]);
+  // Pagination calculations
   const pageCount = Math.ceil(filteredEvents.length / pageSize);
+  const paginatedEvents = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return filteredEvents.slice(startIndex, startIndex + pageSize);
+  }, [filteredEvents, currentPage, pageSize]);
 
-  function handleMouseMove(e) {
-    // Get normalized mouse coordinates (-1 to 1)
-    const x = (e.clientX / window.innerWidth) * 2 - 1;
-    const y = -((e.clientY / window.innerHeight) * 2 - 1);
+  // Mouse move handler for interactive effects
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    setWindowWidth(window.innerWidth);
+    
+    // Add subtle parallax or cursor following effects here if needed
+    const mouseX = (clientX / window.innerWidth) * 100;
+    const mouseY = (clientY / window.innerHeight) * 100;
+    
+    // You can use mouseX and mouseY for advanced effects
+  };
 
-    // Adjust these values to fit your scene's scale and camera
-    const lookTargetPosition = { x: x * 5, y: y * 2, z: 0 };
-
-    // Move the null object in Spline
-    if (splineRef.current) {
-      splineRef.current.emitEvent('setPosition', 'LookTarget', lookTargetPosition);
-    }
-  }
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setWindowWidth(window.innerWidth);
-      const handleResize = () => setWindowWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, []);
+  const filterOptions = [
+    { key: 'all', label: 'All Events', icon: FilterIcon },
+    { key: 'workshops', label: 'Workshops', icon: AcademicCapIcon },
+    { key: 'competitions', label: 'Competitions', icon: TrophyIcon },
+    { key: 'social', label: 'Social', icon: UserGroupIcon }
+  ];
 
   return (
     <>
       <Head>
-        <title>Events - Page {currentPage} | IEEE ESPRIT SB</title>
-        <meta name="description" content={`Découvrez nos événements - Page ${currentPage}`} />
-        {/* SEO: Open Graph & Twitter */}
-        <meta property="og:title" content="Events | IEEE ESPRIT SB" />
-        <meta property="og:description" content="Découvrez nos événements, workshops et compétitions." />
+        <title>Events - IEEE ESPRIT Student Branch</title>
+        <meta name="description" content="Discover extraordinary events, workshops, and competitions organized by IEEE ESPRIT Student Branch. Join our vibrant community of innovation and excellence." />
+        <meta name="keywords" content="IEEE ESPRIT, events, workshops, competitions, technology, engineering, student branch" />
+        <meta property="og:title" content="Events - IEEE ESPRIT Student Branch" />
+        <meta property="og:description" content="Discover extraordinary events, workshops, and competitions organized by IEEE ESPRIT Student Branch." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ieee-esprit.tn/events" />
-        <meta property="og:image" content="https://ieee-esprit.tn/og-events.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Events | IEEE ESPRIT SB" />
-        <meta name="twitter:description" content="Découvrez nos événements, workshops et compétitions." />
-        <meta name="twitter:image" content="https://ieee-esprit.tn/og-events.jpg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://ieee-esprit.tn/events" />
-        {/* JSON-LD Event Schema */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Event",
-            "name": "IEEE ESPRIT Events",
-            "startDate": events[0]?.date,
-            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "location": {
-              "@type": "Place",
-              "name": events[0]?.location,
-              "address": "ESPRIT, Tunis"
-            },
-            "image": [
-              "https://ieee-esprit.tn/og-events.jpg"
-            ],
-            "description": "Découvrez nos événements, workshops et compétitions.",
-            "organizer": {
-              "@type": "Organization",
-              "name": "IEEE ESPRIT SB",
-              "url": "https://ieee-esprit.tn"
-            }
-          })
-        }} />
       </Head>
       <AnimatePresence mode="wait">
         {preloading && <Preloader />}
@@ -185,37 +152,25 @@ export default function EventsPage() {
       <NightSkyBackground />
 
       {/* Main content container */}
-      <main className="content-container" style={{ opacity: loadingComplete ? 1 : 0, transition: 'opacity 0.5s ease-in-out 0.3s' }} onMouseMove={handleMouseMove}>
+      <main className={`events-content-container ${loadingComplete ? 'loaded' : ''}`} onMouseMove={handleMouseMove}>
         {/* Navigation */}
         <Navbar active="events" />
 
         {/* Events content */}
-        <section style={{ padding: '2rem', minHeight: '100vh', marginTop: '100px' }}>
+        <section className="events-main-section">
           {/* Hero Section */}
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 50 }}
             transition={{ duration: 1, delay: 0.5 }}
-            style={{ textAlign: 'center', marginBottom: '5rem' }}
+            className="events-hero-header"
           >
             {/* Elegant Overline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 20 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: 'var(--text-sm)',
-                fontWeight: '500',
-                letterSpacing: 'var(--letter-widest)',
-                textTransform: 'uppercase',
-                color: 'var(--text-tertiary)',
-                marginBottom: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem'
-              }}
+              className="events-overline"
             >
               <SparklesIcon size={16} className="icon-pulse" />
               IEEE ESPRIT Student Branch
@@ -223,25 +178,7 @@ export default function EventsPage() {
             </motion.div>
 
             {/* Main Title with Sophisticated Typography */}
-            <h1 className="text-display" style={{ 
-              fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-              fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
-              color: '#ffffff',
-              fontWeight: 800,
-              letterSpacing: '-0.02em',
-              lineHeight: '1.1',
-              textAlign: 'center',
-              marginBottom: '1rem',
-              padding: '0 1rem',
-              wordBreak: 'break-word',
-              hyphens: 'auto',
-              background: 'linear-gradient(135deg, #ffffff 0%, #e6e6ff 50%, #ffffff 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
-              filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
-            }}>
+            <h1 className="events-main-title">
               Extraordinary Events
             </h1>
 
@@ -250,17 +187,7 @@ export default function EventsPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 30 }}
               transition={{ duration: 1, delay: 0.9 }}
-              className="text-body-large"
-              style={{
-                maxWidth: '800px',
-                margin: '0 auto 1rem auto',
-                fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                lineHeight: '1.6',
-                fontWeight: 400,
-                color: 'var(--text-secondary)',
-                textAlign: 'center',
-                letterSpacing: '0.01em'
-              }}
+              className="events-subtitle"
             >
               Discover the remarkable journey of innovation, collaboration, and excellence through our 
               carefully curated collection of events, workshops, and community gatherings.
@@ -271,14 +198,7 @@ export default function EventsPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: loadingComplete ? 1 : 0, scale: loadingComplete ? 1 : 0.9 }}
               transition={{ duration: 0.8, delay: 1.1 }}
-              style={{
-                display: 'flex',
-                gap: '2rem',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                marginTop: '2rem'
-              }}
+              className="events-metrics-container"
             >
               {[
                 { icon: EventIcon, number: '50+', label: 'Events' },
@@ -290,33 +210,13 @@ export default function EventsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.3 + index * 0.1 }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.75rem 1.25rem',
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    borderRadius: '2rem',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)'
-                  }}
+                  className="events-metric-item"
                 >
                   <metric.icon size={18} className="icon-hover-glow" />
-                  <span style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: 'var(--text-lg)',
-                    fontWeight: '700',
-                    color: 'var(--text-primary)'
-                  }}>
+                  <span className="events-metric-number">
                     {metric.number}
                   </span>
-                  <span style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: 'var(--text-sm)',
-                    fontWeight: '500',
-                    color: 'var(--text-tertiary)',
-                    letterSpacing: 'var(--letter-wide)'
-                  }}>
+                  <span className="events-metric-label">
                     {metric.label}
                   </span>
                 </motion.div>
@@ -329,17 +229,11 @@ export default function EventsPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 30 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center', 
-              gap: '2.5rem', 
-              marginBottom: '4rem' 
-            }}
+            className="events-search-filter-section"
           >
             {/* Premium Search Bar */}
             <motion.div 
-              style={{ position: 'relative', width: '100%', maxWidth: '600px' }}
+              className="events-search-container"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
@@ -348,44 +242,10 @@ export default function EventsPage() {
                 placeholder="Search events by title, description, or location..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '1.25rem 4rem 1.25rem 1.5rem',
-                  borderRadius: '2rem',
-                  border: '2px solid rgba(255, 255, 255, 0.12)',
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  color: 'var(--text-primary)',
-                  fontFamily: 'var(--font-body)',
-                  fontSize: 'var(--text-base)',
-                  fontWeight: '400',
-                  letterSpacing: 'var(--letter-normal)',
-                  backdropFilter: 'blur(20px)',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  outline: 'none',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = 'var(--accent-primary)';
-                  e.target.style.boxShadow = '0 0 0 4px rgba(63, 81, 181, 0.1), 0 8px 30px rgba(63, 81, 181, 0.2)';
-                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                  e.target.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
-                }}
+                className="events-search-input"
               />
               <motion.div 
-                style={{
-                  position: 'absolute',
-                  right: '1.5rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: 'var(--text-tertiary)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
+                className="events-search-icon"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -394,105 +254,29 @@ export default function EventsPage() {
             </motion.div>
 
             {/* Sophisticated Filter Buttons */}
-            <motion.div 
-              style={{ 
-                display: 'flex', 
-                gap: '1rem', 
-                flexWrap: 'wrap', 
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 20 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-            >
-              {/* Filter Label */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                marginRight: '1rem'
-              }}>
-                <FilterIcon size={18} className="icon-hover-lift" />
-                <span style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: 'var(--text-sm)',
-                  fontWeight: '500',
-                  color: 'var(--text-tertiary)',
-                  letterSpacing: 'var(--letter-wide)',
-                  textTransform: 'uppercase'
-                }}>
-                  Filter by
-                </span>
-              </div>
-
-              {/* Filter Options */}
-              {[
-                { key: 'all', label: 'All Events', icon: SparklesIcon },
-                { key: 'workshops', label: 'Workshops', icon: AcademicCapIcon },
-                { key: 'competitions', label: 'Competitions', icon: TrophyIcon },
-                { key: 'social', label: 'Social', icon: UserGroupIcon }
-              ].map((filter) => (
+            <motion.div className="events-filter-buttons">
+              {filterOptions.map((filter, index) => (
                 <motion.button
                   key={filter.key}
-                  onClick={() => setActiveFilter(filter.key)}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  style={{
-                    padding: '0.875rem 1.5rem',
-                    borderRadius: '2rem',
-                    border: '2px solid transparent',
-                    background: activeFilter === filter.key 
-                      ? 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))' 
-                      : 'rgba(255, 255, 255, 0.08)',
-                    color: activeFilter === filter.key ? '#ffffff' : 'var(--text-secondary)',
-                    fontFamily: 'var(--font-body)',
-                    fontSize: 'var(--text-sm)',
-                    fontWeight: '600',
-                    letterSpacing: 'var(--letter-normal)',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    backdropFilter: 'blur(20px)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    boxShadow: activeFilter === filter.key 
-                      ? '0 8px 25px rgba(63, 81, 181, 0.3)' 
-                      : '0 4px 15px rgba(0, 0, 0, 0.1)',
-                    position: 'relative',
-                    overflow: 'hidden'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeFilter !== filter.key) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeFilter !== filter.key) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                      e.currentTarget.style.borderColor = 'transparent';
-                    }
-                  }}
+                  className={`events-filter-button ${activeFilter === filter.key ? 'active' : ''}`}
+                  onClick={() => setActiveFilter(filter.key)}
                 >
-                  <filter.icon size={16} className="icon-container" />
-                  {filter.label}
-                  
-                  {/* Active indicator */}
+                  <span className="events-filter-icon">
+                    <filter.icon size={16} />
+                  </span>
+                  <span className="events-filter-text">
+                    {filter.label}
+                  </span>
                   {activeFilter === filter.key && (
                     <motion.div
                       layoutId="activeFilter"
-                      style={{
-                        position: 'absolute',
-                        top: '0',
-                        left: '0',
-                        right: '0',
-                        bottom: '0',
-                        background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
-                        borderRadius: '2rem',
-                        zIndex: -1
-                      }}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      className="filter-active-indicator"
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
                     />
                   )}
                 </motion.button>
@@ -501,95 +285,16 @@ export default function EventsPage() {
           </motion.div>
 
           {/* Sélecteur du nombre de cards par page */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '2rem 0 1.5rem 0', gap: '2rem', flexWrap: 'wrap' }}>
-            <div style={{ minWidth: 200, flex: '0 0 auto' }}>
+          <div className="events-page-size-container">
+            <div className="events-page-size-selector events-select-container">
               <Select
                 options={pageSizeOptions}
                 value={pageSizeOptions.find(opt => opt.value === pageSize)}
                 onChange={opt => setPageSize(opt.value)}
                 instanceId="event-page-size-select"
                 aria-label="Number of events per page"
-                styles={{
-                  control: (base, state) => ({
-                    ...base,
-                    background: 'rgba(30, 28, 124, 0.45)',
-                    borderRadius: '1.5rem',
-                    border: state.isFocused ? '2.5px solid var(--accent-primary, #3f51b5)' : '2px solid rgba(255,255,255,0.18)',
-                    color: 'var(--text-primary, #fff)',
-                    minWidth: 180,
-                    fontFamily: 'var(--font-body)',
-                    fontWeight: 600,
-                    fontSize: '1.08rem',
-                    boxShadow: state.isFocused ? '0 0 0 4px rgba(63,81,181,0.18)' : '0 2px 12px 0 rgba(63,81,181,0.10)',
-                    backdropFilter: 'blur(8px)',
-                    transition: 'all 0.25s',
-                  }),
-                  valueContainer: (base) => ({
-                    ...base,
-                    color: 'var(--text-primary, #fff)',
-                    paddingLeft: '1.1rem',
-                  }),
-                  singleValue: (base) => ({
-                    ...base,
-                    color: 'var(--text-primary, #fff)',
-                    fontWeight: 700,
-                  }),
-                  input: (base) => ({
-                    ...base,
-                    color: 'var(--text-primary, #fff)',
-                  }),
-                  dropdownIndicator: (base, state) => ({
-                    ...base,
-                    color: state.isFocused ? 'var(--accent-primary, #3f51b5)' : '#b8beea',
-                    transition: 'color 0.2s',
-                  }),
-                  indicatorSeparator: (base) => ({
-                    ...base,
-                    background: 'rgba(255,255,255,0.12)',
-                  }),
-                  menu: (base) => ({
-                    ...base,
-                    background: 'rgba(30, 28, 124, 0.98)',
-                    borderRadius: 18,
-                    color: '#fff',
-                    marginTop: 6,
-                    boxShadow: '0 8px 32px 0 rgba(63,81,181,0.18)',
-                    padding: '0.25rem 0',
-                    minWidth: 180,
-                  }),
-                  option: (base, state) => ({
-                    ...base,
-                    background: state.isSelected
-                      ? 'linear-gradient(135deg, var(--accent-primary, #3f51b5) 60%, var(--accent-secondary, #9c27b0) 100%)'
-                      : state.isFocused
-                        ? 'rgba(63,81,181,0.18)'
-                        : 'transparent',
-                    color: state.isSelected ? '#fff' : state.isFocused ? '#fff' : '#e2e8f0',
-                    fontWeight: state.isSelected ? 700 : 500,
-                    borderRadius: 14,
-                    fontFamily: 'var(--font-body)',
-                    fontSize: '1.08rem',
-                    padding: '0.75rem 1.5rem',
-                    transition: 'background 0.18s, color 0.18s',
-                    cursor: 'pointer',
-                  }),
-                  menuList: (base) => ({
-                    ...base,
-                    padding: 0,
-                  }),
-                }}
-                theme={theme => ({
-                  ...theme,
-                  borderRadius: 18,
-                  colors: {
-                    ...theme.colors,
-                    primary: 'var(--accent-primary)',
-                    primary25: 'rgba(63,81,181,0.18)',
-                    neutral0: 'rgba(30, 28, 124, 0.98)',
-                    neutral80: '#fff',
-                  },
-                })}
                 isSearchable={false}
+                classNamePrefix="react-select"
               />
             </div>
           </div>
@@ -597,12 +302,7 @@ export default function EventsPage() {
           {/* Affichage des événements paginés */}
           <motion.div
             id="events-cards-section"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-              gap: '2rem',
-              marginBottom: '4rem'
-            }}
+            className="events-grid"
           >
             {paginatedEvents.map((event, index) => (
               <motion.div
@@ -611,144 +311,47 @@ export default function EventsPage() {
                 animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 50, scale: loadingComplete ? 1 : 0.9 }}
                 transition={{ duration: 0.6, delay: 0.9 + index * 0.1 }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
-                  borderRadius: '20px',
-                  padding: '2rem',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  transition: 'all 0.4s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  minHeight: '480px',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(63, 81, 181, 0.3)';
-                  e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                }}
+                className="event-card"
               >
                 {/* Event Image - Optimized */}
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '16/9',
-                  background: 'linear-gradient(135deg, #e3e8f0 0%, #f8fafc 100%)',
-                  borderRadius: '16px',
-                  marginBottom: '1.5rem',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  boxShadow: '0 4px 24px rgba(63,81,181,0.10)',
-                  flexShrink: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'box-shadow 0.3s cubic-bezier(0.4,0,0.2,1)'
-                }}>
+                <div className="event-image-container">
                   <Image
                     src={`/assets/events/${event.img || event.image || 'default.jpg'}`}
                     alt={event.title}
                     fill
-                    style={{
-                      objectFit: 'cover',
-                      objectPosition: 'center',
-                      borderRadius: '16px',
-                      transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1), filter 0.3s',
-                      boxShadow: '0 2px 8px rgba(63,81,181,0.08)'
-                    }}
+                    className="event-image"
                     sizes="(max-width: 600px) 100vw, 600px"
                     priority={index < 2}
                     loading={index < 2 ? 'eager' : 'lazy'}
                     onError={(e) => { e.target.style.opacity = 0.5; e.target.onerror = null; }}
                   />
                   {/* Optional overlay for premium look */}
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(180deg,rgba(0,0,0,0.04) 60%,rgba(63,81,181,0.08) 100%)',
-                    borderRadius: '16px',
-                    pointerEvents: 'none',
-                  }} />
+                  <div className="event-image-overlay" />
                 </div>
 
                 {/* Gradient Overlay */}
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '4px',
-                  background: 'linear-gradient(90deg, #00bcd4, #3f51b5, #9c27b0)',
-                  borderRadius: '20px 20px 0 0',
-                  zIndex: 2
-                }} />
+                <div className="event-gradient-overlay" />
 
                 {/* Event Content */}
-                <div style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div className="event-content">
                   {/* Event Title with Sophisticated Typography */}
-                  <h3 style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'var(--text-2xl)',
-                    fontWeight: '700',
-                    letterSpacing: 'var(--letter-tight)',
-                    lineHeight: 'var(--leading-snug)',
-                    color: 'var(--text-primary)',
-                    marginBottom: '1.25rem'
-                  }}>
+                  <h3 className="event-title">
                     {event.title}
                   </h3>
 
                   {/* Event Meta Information */}
-                  <div style={{ 
-                    display: 'flex', 
-                    gap: '1rem', 
-                    marginBottom: '1.5rem',
-                    flexWrap: 'wrap'
-                  }}>
+                  <div className="event-meta">
                     <motion.span 
-                      style={{
-                        background: 'rgba(63, 81, 181, 0.15)',
-                        color: '#8bb6ff',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '1.5rem',
-                        fontFamily: 'var(--font-body)',
-                        fontSize: 'var(--text-sm)',
-                        fontWeight: '500',
-                        letterSpacing: 'var(--letter-normal)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        border: '1px solid rgba(139, 182, 255, 0.2)',
-                        backdropFilter: 'blur(10px)'
-                      }}
-                      whileHover={{ scale: 1.05, backgroundColor: 'rgba(63, 81, 181, 0.2)' }}
+                      className="event-meta-date"
+                      whileHover={{ scale: 1.05 }}
                     >
                       <CalendarIcon size={14} className="icon-hover-lift" />
                       {event.date}
                     </motion.span>
                     
                     <motion.span 
-                      style={{
-                        background: 'rgba(156, 39, 176, 0.15)',
-                        color: '#d1a3ff',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '1.5rem',
-                        fontFamily: 'var(--font-body)',
-                        fontSize: 'var(--text-sm)',
-                        fontWeight: '500',
-                        letterSpacing: 'var(--letter-normal)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        border: '1px solid rgba(209, 163, 255, 0.2)',
-                        backdropFilter: 'blur(10px)'
-                      }}
-                      whileHover={{ scale: 1.05, backgroundColor: 'rgba(156, 39, 176, 0.2)' }}
+                      className="event-meta-location"
+                      whileHover={{ scale: 1.05 }}
                     >
                       <LocationIcon size={14} className="icon-hover-lift" />
                       {event.location}
@@ -756,19 +359,7 @@ export default function EventsPage() {
                   </div>
 
                   {/* Event Description */}
-                  <p style={{
-                    fontFamily: 'var(--font-body)',
-                    color: 'var(--text-secondary)',
-                    lineHeight: 'var(--leading-relaxed)',
-                    fontSize: 'var(--text-base)',
-                    fontWeight: '400',
-                    letterSpacing: 'var(--letter-normal)',
-                    display: '-webkit-box',
-                    WebkitLineClamp: '4',
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    marginBottom: '2rem'
-                  }}>
+                  <p className="event-description">
                     {event.description}
                   </p>
 
@@ -776,46 +367,14 @@ export default function EventsPage() {
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    style={{
-                      background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
-                      color: '#ffffff',
-                      border: 'none',
-                      padding: '1rem 2rem',
-                      borderRadius: '2rem',
-                      fontFamily: 'var(--font-body)',
-                      fontSize: 'var(--text-base)',
-                      fontWeight: '600',
-                      letterSpacing: 'var(--letter-normal)',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.75rem',
-                      boxShadow: '0 8px 25px rgba(63, 81, 181, 0.3)',
-                      position: 'relative',
-                      overflow: 'hidden'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(63, 81, 181, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(63, 81, 181, 0.3)';
-                    }}
+                    className="event-cta-button"
                   >
                     <span>Learn More</span>
                     <ArrowRightIcon size={16} className="icon-hover-lift" />
                     
                     {/* Button Shimmer Effect */}
                     <motion.div
-                      style={{
-                        position: 'absolute',
-                        top: '0',
-                        left: '-100%',
-                        width: '100%',
-                        height: '100%',
-                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-                        zIndex: 1
-                      }}
+                      className="event-button-shimmer"
                       animate={{
                         left: ['-100%', '100%']
                       }}
@@ -830,23 +389,14 @@ export default function EventsPage() {
                 </div>
 
                 {/* Floating Elements */}
-                <div style={{
-                  position: 'absolute',
-                  top: '-50px',
-                  right: '-50px',
-                  width: '100px',
-                  height: '100px',
-                  background: 'linear-gradient(135deg, rgba(63, 81, 181, 0.1), rgba(156, 39, 176, 0.1))',
-                  borderRadius: '50%',
-                  filter: 'blur(20px)',
-                  zIndex: 1
-                }} />
+                <div className="event-floating-element" />
               </motion.div>
             ))}
           </motion.div>
+
           {/* Pagination en bas si besoin */}
           {pageCount > 1 && (
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
+            <div className="events-pagination-container">
               <Pagination
                 pageCount={pageCount}
                 currentPage={currentPage}
@@ -861,74 +411,29 @@ export default function EventsPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              style={{
-                textAlign: 'center',
-                padding: '5rem 2rem',
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02))',
-                borderRadius: '2rem',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              className="events-no-results"
             >
               {/* Icon Container */}
               <motion.div 
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '5rem',
-                  height: '5rem',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '2rem',
-                  marginBottom: '2rem',
-                  border: '1px solid rgba(255, 255, 255, 0.2)'
-                }}
+                className="events-no-results-icon"
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
               >
-                <SearchIcon size={32} style={{ color: 'var(--text-tertiary)' }} />
+                <SearchIcon size={32} />
               </motion.div>
 
               {/* Title */}
-              <h3 style={{ 
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--text-3xl)', 
-                fontWeight: '700',
-                letterSpacing: 'var(--letter-tight)',
-                marginBottom: '1rem', 
-                color: 'var(--text-primary)'
-              }}>
+              <h3 className="events-no-results-title">
                 No Events Found
               </h3>
 
               {/* Description */}
-              <p style={{ 
-                fontFamily: 'var(--font-body)',
-                fontSize: 'var(--text-lg)',
-                fontWeight: '400',
-                color: 'var(--text-secondary)',
-                letterSpacing: 'var(--letter-normal)',
-                lineHeight: 'var(--leading-relaxed)',
-                maxWidth: '400px',
-                margin: '0 auto'
-              }}>
+              <p className="events-no-results-description">
                 Try adjusting your search terms or filters to discover the events you&apos;re looking for.
               </p>
 
               {/* Background Decoration */}
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '200px',
-                height: '200px',
-                background: 'radial-gradient(circle, rgba(63, 81, 181, 0.05) 0%, transparent 70%)',
-                borderRadius: '50%',
-                zIndex: -1
-              }} />
+              <div className="events-no-results-bg" />
             </motion.div>
           )}
 
@@ -937,31 +442,10 @@ export default function EventsPage() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: loadingComplete ? 1 : 0, y: loadingComplete ? 0 : 50 }}
             transition={{ duration: 0.8, delay: 1.5 }}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '2rem',
-              marginTop: '5rem',
-              padding: '3rem',
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04))',
-              borderRadius: '2rem',
-              backdropFilter: 'blur(30px)',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
+            className="events-stats-section"
           >
             {/* Background Decoration */}
-            <div style={{
-              position: 'absolute',
-              top: '-50%',
-              right: '-50%',
-              width: '100%',
-              height: '100%',
-              background: 'radial-gradient(circle, rgba(63, 81, 181, 0.1) 0%, transparent 50%)',
-              borderRadius: '50%',
-              zIndex: 0
-            }} />
+            <div className="events-stats-bg" />
 
             {[
               { number: events.length, label: 'Total Events', icon: EventIcon, color: '#3f51b5' },
@@ -974,23 +458,13 @@ export default function EventsPage() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 1.7 + index * 0.1 }}
-                style={{ 
-                  textAlign: 'center',
-                  position: 'relative',
-                  zIndex: 1
-                }}
+                className="events-stat-item"
               >
                 {/* Icon Container */}
                 <motion.div 
+                  className="events-stat-icon"
                   style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '4rem',
-                    height: '4rem',
                     background: `linear-gradient(135deg, ${stat.color}20, ${stat.color}10)`,
-                    borderRadius: '1.5rem',
-                    marginBottom: '1.5rem',
                     border: `1px solid ${stat.color}30`
                   }}
                   whileHover={{ scale: 1.1, rotate: 5 }}
@@ -1000,27 +474,12 @@ export default function EventsPage() {
                 </motion.div>
 
                 {/* Number Display */}
-                <div style={{ 
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'var(--text-4xl)', 
-                  fontWeight: '800',
-                  letterSpacing: 'var(--letter-tight)',
-                  color: 'var(--text-primary)',
-                  marginBottom: '0.75rem',
-                  lineHeight: 'var(--leading-tight)'
-                }}>
+                <div className="events-stat-number">
                   {stat.number}
                 </div>
 
                 {/* Label */}
-                <div style={{ 
-                  fontFamily: 'var(--font-body)',
-                  color: 'var(--text-tertiary)', 
-                  fontSize: 'var(--text-base)',
-                  fontWeight: '500',
-                  letterSpacing: 'var(--letter-wide)',
-                  textTransform: 'uppercase'
-                }}>
+                <div className="events-stat-label">
                   {stat.label}
                 </div>
               </motion.div>

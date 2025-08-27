@@ -38,36 +38,8 @@ const LocationSection = () => {
               <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#7f00ff"/>
             </svg>
           </div>
-          <h2 className="location-title font-playfair" style={{
-            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-            fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
-            color: '#ffffff',
-            fontWeight: 800,
-            letterSpacing: '-0.02em',
-            lineHeight: '1.1',
-            textAlign: 'center',
-            marginBottom: '0.5rem',
-            padding: '0 1rem',
-            wordBreak: 'break-word',
-            hyphens: 'auto',
-            background: 'linear-gradient(135deg, #ffffff 0%, #f0f0ff 50%, #ffffff 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 4px 20px rgba(255, 255, 255, 0.3)',
-            filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
-          }}>We&apos;re located in ESPRIT, Obviously!</h2>
-          <p className="location-subtitle font-playfair" style={{
-            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-            color: '#e6e6ff',
-            fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
-            fontWeight: 500,
-            textAlign: 'center',
-            marginBottom: '2.5em',
-            letterSpacing: '0.06em',
-            textShadow: '0 2px 12px rgba(230, 230, 255, 0.4)',
-            opacity: 0.9
-          }}>Check if we&apos;re neighbours!</p>
+          <h2 className="location-title font-playfair">We&apos;re located in ESPRIT, Obviously!</h2>
+          <p className="location-subtitle font-playfair">Check if we&apos;re neighbours!</p>
         </div>
         
         <div className="map-container" ref={mapContainerRef}>
