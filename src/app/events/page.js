@@ -35,7 +35,7 @@ export default function EventsPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [_windowWidth, setWindowWidth] = useState(1200);
-  const splineRef = useRef();
+  const _splineRef = useRef();
 
   // Debounced search state
   const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
@@ -119,10 +119,10 @@ export default function EventsPage() {
     setWindowWidth(window.innerWidth);
     
     // Add subtle parallax or cursor following effects here if needed
-    const mouseX = (clientX / window.innerWidth) * 100;
-    const mouseY = (clientY / window.innerHeight) * 100;
+    const _mouseX = (clientX / window.innerWidth) * 100;
+    const _mouseY = (clientY / window.innerHeight) * 100;
     
-    // You can use mouseX and mouseY for advanced effects
+    // You can use _mouseX and _mouseY for advanced effects
   };
 
   const filterOptions = [
