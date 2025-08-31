@@ -122,7 +122,7 @@ export default function EventsPage() {
     const _mouseX = (clientX / window.innerWidth) * 100;
     const _mouseY = (clientY / window.innerHeight) * 100;
     
-    // You can use _mouseX and _mouseY for advanced effects
+    // You can use mouseX and mouseY for advanced effects
   };
 
   const filterOptions = [
