@@ -43,17 +43,7 @@
     "foundation": "2023",
     "color" : "#008d49"
   },
-  "MTT-S": {
-    "name": "MTT-S",
-    "subName": "Microwave Theory and Techniques Society",
-    "description": "The MTT-S Student Branch is a community of students passionate about microwave engineering. Through workshops, talks, and projects, members deepen their knowledge and explore applications in the field. It provides networking opportunities and career development in microwave technology. Join the MTT-S Student Branch to connect with like-minded individuals and stay updated with the latest advancements in microwave theory and technology.",
-    "url": "https://www.facebook.com/MTTSESPRIT/",
-    "website": "https://mtts-esprit.ieee.tn",
-    "numberOfMembers": 24,
-    "numberOfActivities": 26,
-    "foundation": "2022",
-    "color" : "#00609c"
-  },
+  
   "RAS": {
     "name": "RAS",
     "subName": "Robotics and Automation Society",

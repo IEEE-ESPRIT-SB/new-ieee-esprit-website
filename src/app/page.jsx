@@ -95,7 +95,7 @@ export default function Home() {
             >
               <Typewriter
                 options={{
-                  strings: ["IEEE", "Engineers", "Innovators"],
+                  strings: ["IEEE", "ESPRIT", "IEEE ESPRIT SB"],
                   autoStart: true,
                   loop: true,
                   delay: 50,
@@ -122,12 +122,7 @@ export default function Home() {
               letterSpacing: "0.01em",
             }}
           >
-            IEEE Esprit Student Branch is the largest SB in Tunisia Section as
-            well as Region 8. Founded in 2017, IEEE ESPRIT Student Branch made
-            its way to being ranked as the largest Student Branch in Tunisia
-            Section as well as the Region 8. It includes 7 technical chapters
-            (AESS, CIS, CS, IAS, IES, PES, MTTS, RAS) alongside two groups
-            (SIGHT and WIE).
+            IEEE Esprit Student Branch is the largest SB in Tunisia Section as well as Region 8. Founded in 2017, IEEE ESPRIT Student Branch made its way to being ranked as the largest Student Branch in Tunisia Section as well as the Region 8. It includes 5 technical chapters (AESS, CIS, CS, IAS, IES, PES, RAS) alongside two groups (SIGHT and WIE).
           </motion.p>
 
           <motion.div

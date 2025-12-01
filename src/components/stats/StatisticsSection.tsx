@@ -174,11 +174,11 @@ const StatisticItem = ({ number, label, delay }: StatisticItemProps) => {
 
 export default function StatisticsSection() {
   const statistics = [
-    { number: 8, label: 'Chapters' },
+    { number: 5, label: 'Chapters' },
     { number: 2, label: 'Groups' },
-    { number: 1025, label: 'Members' },
-    { number: 170, label: 'Annual Activities' },
-    { number: 25, label: 'Awards' }
+    { number: 1182, label: 'Members' },
+    { number: +170, label: 'Annual Activities' },
+    { number: +30, label: 'Awards' }
   ];
 
   return (

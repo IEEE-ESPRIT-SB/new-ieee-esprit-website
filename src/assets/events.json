@@ -314,5 +314,47 @@
     "date": "31st October - 1st November",
     "location": "Egypt",
     "img": ""
-  }
+  },
+  {
+    "title": "AWS Community Day Tunisia Vol. 2",
+    "description": "AWS Community Day Tunisia Vol. 2, hosted at ESPRIT School of Business and co-organized with AWS Community Tunisia, gathered cloud professionals to explore advanced AWS technologies. The event featured expert-led sessions on Kubernetes optimization, containerization with ECR/ECS, secure cloud architecture, cost-efficient solutions, and the future of agentic AI. It fostered collaboration and knowledge sharing and strengthened Tunisia’s cloud tech ecosystem, with 20 IEEE members and 45 non-IEEE participants attending.",
+    "date": "",
+    "location": "ESPRIT School of Business",
+    "img": "aws.png"
+},
+{
+"title": "Pegasus Rise: 8 Years of Vision and Venture",
+"description": "A 3-day celebration of the IEEE ESPRIT SB’s 8th anniversary, featuring a 14-hour SDG-focused ideathon, expert workshops, and a panel on startups and funding. Sessions covered product design, identifying meaningful problems, and career paths (consulting, entrepreneurship, freelancing). The event empowered young innovators, with 90 IEEE members and 12 guests attending.",
+"date": "11-16 july 2025 ",
+"location": "ESPRIT ",
+"img": "Pegasus Rise.png"
+},
+{
+"title": "Pegasus Showroom",
+"description": "The annual promotional event where IEEE ESPRIT SB chapters present their work, projects, and opportunities to new students through booths, demos, and interactive activities. The showroom connected 36 IEEE members with 170 non-IEEE attendees, encouraging engagement and membership growth.",
+"date": "17 september 2025 ",
+"location": "ESPRIT",
+"img": "Pegasus Showroom.png"
+},
+{
+"title": "Explore IEEE",
+"description": "A collaborative workshop with IEEE INSAT SB and IEEE ISETCOM SB was held at ISETCOM. The session introduced students to IEEE’s structure, benefits, resources, and opportunities, ending with an interactive quiz and giveaways to boost engagement. Attendees included 15 IEEE and 20 non-IEEE participants.",
+"date": "24 Sep 2025",
+"location": "ISETCOM",
+"img": "Explore IEEE.png"
+},
+{
+"title": "IEEE Day Celebration",
+"description": "A multi-SB collaboration (IEEE ESPRIT SB, ENIT SB, FSS SB) celebrating global IEEE Day. The event included workshops on IEEE benefits, the Student-to-YP journey, Generative AI, CNNs, and professional development, followed by team-building activities. The celebration brought together 107 IEEE members and 1 non-IEEE guest.",
+"date": "15 Oct 2025",
+"location": "ESPRIT ",
+"img": "Research Paper.jpg"
+},
+{
+"title": "Research Paper Writing Workshop",
+"description": "A practical workshop with Eng. Amine Ben Helal focused on mastering scientific writing by using tools such as Google Scholar, IEEE Xplore, Litmaps, and LaTeX. Participants learned paper structure, reference management, and best research practices. The session gathered 47 IEEE members.",
+"date": "",
+"location": "",
+"img": "IEEE Day Celebration.jpg"
+}
 ]
